@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Alta cliente</title>
+</head>
+<body>
+	<h1>Aplicación de clientes</h1>
+	<h3>Mensaje: <span th:text="${mensaje}"></span></h3>
+	
+	<h3>Formulari de edicion del cliente</h3>
+
+	<form th:action="@{/clientes/editar/{id}(id=${cliente.idCliente})}" th:object="${cliente}" method="post">
+		<input type="text" name="nombre" th:value="${cliente.nombre}"/>
+		<input type="text" name="facturacionAnual" th:value="${cliente.facturacionAnual}"/>
+		<input type="text" name="cantidadEmpleados" th:field="*{cantidadEmpleados}"/>
+		<input type="submit" value="Enviar"/>
+	</form>
+</body>
+</html>

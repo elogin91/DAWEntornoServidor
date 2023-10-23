@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+</head>
+<body>
+	<h1>Aplicación de clientes</h1>
+	<h3>Mensaje: <span th:text="${mensaje}"></span></h3>
+	
+	<h3>Listado de Clientes:</h3>
+	<a th:href="@{/clientes/alta}">Nuevo cliente</a>
+	<table border="2" width=100%>
+		<tr>
+			<th>Nombre</th>
+			<th>Facturacion</th>
+			<th>Empleados</th>
+			<th>Ver Detalle</th>
+			<th>Eliminar</th>
+			<th>Editar</th>
+		</tr>
+		<tr th:each="cliente : ${clientes}">
+			<td th:text="${cliente.nombre}"></td>
+			<td th:text="${cliente.facturacionAnual}"></td>
+			<td th:text="${cliente.cantidadEmpleados}"></td>
+			<td><a th:href="@{/clientes/detalle/{id}(id=${cliente.idCliente})}">Ver Detalles</a></td>
+			<td><a th:href="@{/clientes/eliminar/{id}(id=${cliente.idCliente})}">Eliminar</a></td>
+			<td><a th:href="@{/clientes/editar/{id}(id=${cliente.idCliente})}">Editar</a></td>
+		</tr>
+	</table>
+</body>
+</html>
