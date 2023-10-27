@@ -11,17 +11,51 @@
 	<h3>Formulario de edicion de evento</h3>
 
 	<form th:action="@{/eventos/editar/{id}(id=${evento.idEvento})}" th:object="${evento}" method="post">
+		
+		<div>
+		<label for="nombre" th:text="Nombre"></label>
 		<input type="text" name="nombre" th:value="${evento.nombre}"/>
+		</div>
+		<div>
+		<label for="descripcion" th:text="Descrición"></label>
 		<input type="text" name="descripcion" th:value="${evento.descripcion}"/>
+		</div>
+		<div>
+		<label for="fechaInicio" th:text="'Fecha de Inicio'"></label>
 		<input type="date" name="fechaInicio" th:field="*{fechaInicio}"/>
+		</div>
+		<div>
+		<label for="duracion" th:text="Duracion"></label>
 		<input type="text" name="duracion" th:field="*{duracion}"/>
+		</div>
+		<div>
+		<label for="direccion" th:text="Direccion"></label>
 		<input type="text" name="direccion" th:field="*{direccion}"/>
+		</div>
+		<div>
+		<label for="estado" th:text="Estado"></label>
 		<input type="text" name="estado" th:field="*{estado}"/>
+		</div>
+		<div>
+		<label for="destacado" th:text="Destado"></label>
 		<input type="text" name="destacado" th:field="*{destacado}"/>
+		</div>
+		<div>
+		<label for="aforoMaximo" th:text="'Aforo Máximo'"></label>
 		<input type="text" name="aforoMaximo" th:field="*{aforoMaximo}"/>
+		</div>
+		<div>
+		<label for="minimoAsistencia" th:text="'Minimo de Asistencia'"></label>
 		<input type="text" name="minimoAsistencia" th:field="*{minimoAsistencia}"/>
+		</div>
+		<div>
+		<label for="precio" th:text="Precio"></label>
 		<input type="text" name="precio" th:field="*{precio}"/>
+		</div>
+		<div>
+		<label for="tipo" th:text="'Tipo de Evento'"></label>
 		<input type="text" name="tipo" th:field="*{tipo.idTipo}"/>
+		</div>
 		<input type="submit" value="Enviar"/>
 	</form>
 	

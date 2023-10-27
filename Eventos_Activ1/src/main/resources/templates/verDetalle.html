@@ -8,19 +8,21 @@
 	<h1>Aplicación de eventos</h1>
 	
 	<h3>Detalle de evento</h3>
+	
+	
 
-	<p th:text="${evento.idEvento}"></p>
-	<p th:text="${evento.nombre}"></p>
-	<p th:text="${evento.descripcion}"></p>
-	<p th:text="${#dates.format(evento.fechaInicio, 'dd - MM - yyyy')}"></p>
-	<p th:text="${evento.duracion}"></p>
-	<p th:text="${evento.direccion}"></p>
-	<p th:text="${evento.estado}"></p>
-	<p th:text="${evento.destacado}"></p>
-	<p th:text="${evento.aforoMaximo}"></p>
-	<p th:text="${evento.minimoAsistencia}"></p>
-	<p th:text="${evento.precio}"></p>
-	<p th:text="${evento.tipo.idTipo}"></p>
+	<p th:text="'ID evento: '+ ${evento.idEvento}"></p>
+	<p th:text="'Nombre evento: ' + ${evento.nombre}"></p>
+	<p th:text="'Descripcion: ' +${evento.descripcion}"></p>
+	<p th:text="'Fecha de inicio: ' +${#dates.format(evento.fechaInicio, 'dd - MM - yyyy')}"></p>
+	<p th:text="'Duracion evento: ' +${evento.duracion}"></p>
+	<p th:text="'Dirección evento: ' +${evento.direccion}"></p>
+	<p th:text="'Estado evento: ' +${evento.estado}"></p>
+	<p th:text="'Evento destacado: ' +${evento.destacado}"></p>
+	<p th:text="'Aforo máximo del evento: ' +${evento.aforoMaximo}"></p>
+	<p th:text="'Mínimo asistencia del evento: ' +${evento.minimoAsistencia}"></p>
+	<p th:text="'Precio del evento: ' +${evento.precio}"></p>
+	<p th:text="'iD del tipo de evento: ' +${evento.tipo.idTipo}"></p>
 	
 	<a th:href="@{/}">Volver Home</a>
 </body>
