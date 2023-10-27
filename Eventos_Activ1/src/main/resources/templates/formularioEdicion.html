@@ -2,19 +2,29 @@
 <html xmlns:th="http://www.thymeLeaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Alta cliente</title>
+<title>Edición de evento</title>
 </head>
 <body>
-	<h1>Aplicación de clientes</h1>
+	<h1>Aplicación de Eventos</h1>
 	<h3>Mensaje: <span th:text="${mensaje}"></span></h3>
 	
-	<h3>Formulari de edicion del cliente</h3>
+	<h3>Formulario de edicion de evento</h3>
 
-	<form th:action="@{/clientes/editar/{id}(id=${cliente.idCliente})}" th:object="${cliente}" method="post">
-		<input type="text" name="nombre" th:value="${cliente.nombre}"/>
-		<input type="text" name="facturacionAnual" th:value="${cliente.facturacionAnual}"/>
-		<input type="text" name="cantidadEmpleados" th:field="*{cantidadEmpleados}"/>
+	<form th:action="@{/eventos/editar/{id}(id=${evento.idEvento})}" th:object="${evento}" method="post">
+		<input type="text" name="nombre" th:value="${evento.nombre}"/>
+		<input type="text" name="descripcion" th:value="${evento.descripcion}"/>
+		<input type="date" name="fechaInicio" th:field="*{fechaInicio}"/>
+		<input type="text" name="duracion" th:field="*{duracion}"/>
+		<input type="text" name="direccion" th:field="*{direccion}"/>
+		<input type="text" name="estado" th:field="*{estado}"/>
+		<input type="text" name="destacado" th:field="*{destacado}"/>
+		<input type="text" name="aforoMaximo" th:field="*{aforoMaximo}"/>
+		<input type="text" name="minimoAsistencia" th:field="*{minimoAsistencia}"/>
+		<input type="text" name="precio" th:field="*{precio}"/>
+		<input type="text" name="tipo" th:field="*{tipo.idTipo}"/>
 		<input type="submit" value="Enviar"/>
 	</form>
+	
+	<a th:href="@{/}">Volver Home</a>
 </body>
 </html>

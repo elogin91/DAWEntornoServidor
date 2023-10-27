@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import net.unir.eventos.modelo.javabean.Evento;
 import net.unir.eventos.modelo.javabean.Tipo;
 
 @Repository
@@ -25,8 +24,7 @@ public class TipoDaoImpList implements TipoDao{
 
 	@Override
 	public List<Tipo> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return lista;
 	}
 
 	@Override

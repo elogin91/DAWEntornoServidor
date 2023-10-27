@@ -20,7 +20,8 @@ public class HomeController {
 	public String mostrarHome(Model model) {
 		
 		//TODO mostrar solo los activos
-		model.addAttribute("eventos", edao.findAll());
+		model.addAttribute("eventosActivos", edao.findActives());
+		model.addAttribute("eventosNoActivos", edao.findNotActives());
 		
 		//Mostrar los cancelados
 		return "index";

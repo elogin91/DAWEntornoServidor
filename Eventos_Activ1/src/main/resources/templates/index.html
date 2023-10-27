@@ -21,24 +21,47 @@
 	</table>
 	
 	<h3>Listado de eventos activos:</h3>
-	<a th:href="@{/eventos/alta}">Nuevo evento</a>
+
 	<table border="2" width=100%>
 		<tr>
 			<th>Id</th>
 			<th>Nombre</th>
 			<th>Precio</th>
-			<th>Editar</th>
+			<th>Detalle</th>
 			<th>Eliminar</th>
-			<th>Cancelar</th>
+			<th>Editar</th>
 		</tr>
-		<tr th:each="evento : ${eventos}">
+		<tr th:each="evento : ${eventosActivos}">
 			<td th:text="${evento.idEvento}"></td>
 			<td th:text="${evento.nombre}"></td>
 			<td th:text="${evento.precio}"></td>
-			<td><a th:href="@{/eventos/editar/{id}(id=${evento.idEvento})}">Editar</a></td>
+			<td><a th:href="@{/eventos/detalle/{id}(id=${evento.idEvento})}">Detalle</a></td>
 			<td><a th:href="@{/eventos/eliminar/{id}(id=${evento.idEvento})}">Eliminar</a></td>
-			<td><a th:href="@{/eventos/cancelar/{id}(id=${evento.idEvento})}">Cancelar</a></td>
+			<td><a th:href="@{/eventos/editar/{id}(id=${evento.idEvento})}">Editar</a></td>
 		</tr>
 	</table>
+	
+	<a th:href="@{/eventos/alta}">Nuevo evento</a>
+	
+	<h3>Listado de eventos no activos:</h3>
+	<table border="2" width=100%>
+		<tr>
+			<th>Id</th>
+			<th>Nombre</th>
+			<th>Precio</th>
+			<th>Detalle</th>
+			<th>Eliminar</th>
+			<th>Editar</th>
+		</tr>
+		<tr th:each="evento : ${eventosNoActivos}">
+			<td th:text="${evento.idEvento}"></td>
+			<td th:text="${evento.nombre}"></td>
+			<td th:text="${evento.precio}"></td>
+			<td><a th:href="@{/eventos/detalle/{id}(id=${evento.idEvento})}">Detalle</a></td>
+			<td><a th:href="@{/eventos/eliminar/{id}(id=${evento.idEvento})}">Eliminar</a></td>
+			<td><a th:href="@{/eventos/editar/{id}(id=${evento.idEvento})}">Editar</a></td>
+		</tr>
+	</table>
+	
 </body>
 </html>

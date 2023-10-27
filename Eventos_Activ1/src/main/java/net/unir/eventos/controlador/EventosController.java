@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import net.unir.eventos.modelo.dao.EventoDao;
 import net.unir.eventos.modelo.javabean.Evento;
 
-@RequestMapping
+@RequestMapping("eventos")
 @Controller
 public class EventosController {
 

@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import net.unir.eventos.modelo.javabean.Evento;
-import net.unir.eventos.modelo.javabean.Tipo;
 
 @Repository
 public class EventoDaoImpList implements EventoDao{
@@ -28,8 +27,6 @@ public class EventoDaoImpList implements EventoDao{
 	
 	private void cargarLista() {
 		
-		TipoDao tdao;
-		
 		lista.add(new Evento(1, "Cumple Maria", "Cumpleaños con tarta, piñata y actuación", new Date(2024-01-15), 180, "Avd. España s/n",
 				"Activo", 'N', 50, 10, 350, tipoDao.findById(3)));
 		lista.add(new Evento(2, "Boda Pepe", "Paquete nocturno con fuegos artificiales", new Date(2023-10-10), 600, "Plaza Mayor",
@@ -42,32 +39,54 @@ public class EventoDaoImpList implements EventoDao{
 
 	@Override
 	public Evento findById(int idEvento) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < lista.size();i++) {
+			if (lista.get(i).getIdEvento() == idEvento)
+				return lista.get(i);
+		}
 		return null;
 	}
 
 	@Override
-	public List<Evento> findAll() {
-
-		return lista;
-	}
-
-	@Override
 	public int insert(Evento evento) {
-		// TODO Auto-generated method stub
+		if (!lista.contains(evento)) {
+			evento.setIdEvento(++idAuto);
+			lista.add(evento);
+			return 1;
+		}
 		return 0;
 	}
 
 	@Override
 	public int delete(int idEvento) {
-		// TODO Auto-generated method stub
-		return 0;
+		Evento evento = findById(idEvento);
+		if (evento == null) 
+			return 0;
+		
+		return lista.remove(evento) ? 1 : 0;
 	}
 
 	@Override
 	public int updateOne(Evento evento) {
-		// TODO Auto-generated method stub
-		return 0;
+		int pos = lista.indexOf(evento);
+		if (pos == -1) {
+			return 0;
+		}
+		lista.set(pos, evento);
+		return 1;
+	}
+
+	@Override
+	public List<Evento> findActives() {
+		return lista.stream()
+				.filter(it -> it.getEstado().equalsIgnoreCase("activo"))
+				.toList();
+	}
+
+	@Override
+	public List<Evento> findNotActives() {
+		return lista.stream()
+				.filter(it -> it.getEstado().equalsIgnoreCase("cancelado"))
+				.toList();
 	}
 
 }

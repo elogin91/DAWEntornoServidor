@@ -7,8 +7,10 @@ import net.unir.eventos.modelo.javabean.Evento;
 public interface EventoDao {
 	// Método que devuelve un evento a partir de su ID
 	Evento findById(int idEvento);
-	// Método que devuelve una lista con todos los eventos
-	List<Evento> findAll();
+	// Método que devuelve una lista con todos los eventos activos
+	List<Evento> findActives();
+	// Método que devuelve una lista con todos los eventos cancelados
+	List<Evento> findNotActives();
 	// Método para crear un nuevo evento
 	int insert(Evento evento);
 	//Método para borrar un evento según su ID
