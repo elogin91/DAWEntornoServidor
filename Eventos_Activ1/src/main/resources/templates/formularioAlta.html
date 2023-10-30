@@ -1,64 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Alta evento</title>
+	<meta charset="UTF-8">
+	<title>Alta evento</title>
 </head>
+
 <body>
 	<h1>Aplicación de eventos</h1>
 	<h3>Mensaje: <span th:text="${mensaje}"></span></h3>
-	
+
 	<h3>Formulario de alta de nuevo evento</h3>
 
-	<form th:action="@{/eventos/alta}" method="post">
+	<form th:action="@{/eventos/alta}" th:object="${evento}" method="post">
 		<div>
-		<label for="nombre" th:text="Nombre"></label>
-		<input type="text" name="nombre"/>
+			<label for="nombre" th:text="Nombre"></label>
+			<input type="text" name="nombre" th:field="*{nombre}" />
 		</div>
 		<div>
-		<label for="descripcion" th:text="Descrición"></label>
-		<input type="text" name="descripcion" />
+			<label for="descripcion" th:text="Descrición"></label>
+			<input type="text" name="descripcion" th:field="*{descripcion}" />
 		</div>
 		<div>
-		<label for="fechaInicio" th:text="FechaInicio"></label>
-		<input type="date" name="fechaInicio" />
+			<label for="fechaInicio" th:text="FechaInicio"></label>
+			<input type="date" name="fechaInicio" th:field="*{fechaInicio}" />
 		</div>
 		<div>
-		<label for="duracion" th:text="Duracion"></label>
-		<input type="text" name="duracion" />
+			<label for="duracion" th:text="Duracion"></label>
+			<input type="text" name="duracion" th:field="*{duracion}" />
 		</div>
 		<div>
-		<label for="direccion" th:text="Direccion"></label>
-		<input type="text" name="direccion"/>
+			<label for="direccion" th:text="Direccion"></label>
+			<input type="text" name="direccion" th:field="*{direccion}" />
 		</div>
 		<div>
-		<label for="estado" th:text="Estado"></label>
-		<input type="text" name="estado"/>
+			<label for="estado" th:text="Estado"></label>
+			<select name="estado" th:field="*{estado}">
+				<option value="ACTIVO">Activo</option>
+				<option value="CANCELADO">Cancelado</option>
+			</select>
 		</div>
 		<div>
-		<label for="destacado" th:text="Destacado"></label>
-		<input type="text" name="destacado" />
+			<label for="destacado" th:text="Destacado"></label>
+			<select th:field="*{destacado}">
+				<option th:value="'S'">Sí</option>
+				<option th:value="'N'">No</option>
+			</select>
 		</div>
 		<div>
-		<label for="aforoMaximo" th:text="AforoMáximo"></label>
-		<input type="text" name="aforoMaximo" />
+			<label for="aforoMaximo" th:text="AforoMáximo"></label>
+			<input type="text" name="aforoMaximo" th:field="*{aforoMaximo}" />
 		</div>
 		<div>
-		<label for="minimoAsitencia" th:text="AsistenciaMínima"></label>
-		<input type="text" name="minimoAsistencia"/>
+			<label for="minimoAsitencia" th:text="AsistenciaMínima"></label>
+			<input type="text" name="minimoAsistencia" th:field="*{minimoAsistencia}" />
 		</div>
 		<div>
-		<label for="precio" th:text="Precio"></label>
-		<input type="text" name="precio" />
+			<label for="precio" th:text="Precio"></label>
+			<input type="text" name="precio" th:field="*{precio}" />
 		</div>
 		<div>
-		<label for="tipo" th:text="IdTipoEvento"></label>
-		<input type="text" name="tipo" />
+			<label for="tipo" th:text="'Tipo de Evento'"></label>
+			<select th:field="*{tipo.idTipo}">
+				<option th:each="tipo : ${tipos}" th:value="${tipo.idTipo}" th:text="${tipo.nombre}"></option>
+			</select>
 		</div>
-		
-		<input type="submit" value="Enviar"/>
+
+		<input type="submit" value="Enviar" />
 	</form>
-	
+
 	<a th:href="@{/}">Volver Home</a>
 </body>
+
 </html>

@@ -17,4 +17,6 @@ public interface EventoDao {
 	int delete(int idEvento);
 	//Dado un objeto evento, se modifican sus atributos
 	int updateOne(Evento evento);
+	//Cancelar evento
+	int cancelEvent(int idEvento);
 }

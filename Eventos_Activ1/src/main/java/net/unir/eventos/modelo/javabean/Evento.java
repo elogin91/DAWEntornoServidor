@@ -5,26 +5,27 @@ import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Evento implements Serializable{
-	
+@EqualsAndHashCode(of = "idEvento")
+public class Evento implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private int idEvento;
 	private String nombre;
 	private String descripcion;
 	private Date fechaInicio;
 	private int duracion;
 	private String direccion;
-	private String estado;
-	private char destacado;
+	private Estado estado;
+	private Character destacado;
 	private int aforoMaximo;
 	private int minimoAsistencia;
-	private float precio;
+	private double precio;
 	Tipo tipo;
-	
 }

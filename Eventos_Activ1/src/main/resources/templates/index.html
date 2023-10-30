@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Eventos</title>
+	<meta charset="UTF-8">
+	<title>Eventos</title>
+	<link rel="stylesheet" href="@{/css/index.css}"/>
 </head>
+
 <body>
 	<h1>Aplicación de eventos</h1>
 	<h3>Mensaje: <span th:text="${mensaje}"></span></h3>
-	
+
 	<table border="2" width=100%>
-		<tr >
+		<tr>
 			<td><a href="">Tipos</a></td>
 			<td><a href="">Eventos</a></td>
 			<td><a href="">Usuarios</a></td>
@@ -19,7 +22,7 @@
 			<td><a href="">Salir</a></td>
 		</tr>
 	</table>
-	
+
 	<h3>Listado de eventos activos:</h3>
 
 	<table border="2" width=100%>
@@ -28,21 +31,23 @@
 			<th>Nombre</th>
 			<th>Precio</th>
 			<th>Detalle</th>
-			<th>Eliminar</th>
 			<th>Editar</th>
+			<th>Cancelar</th>
+			<th>Eliminar</th>
 		</tr>
 		<tr th:each="evento : ${eventosActivos}">
 			<td th:text="${evento.idEvento}"></td>
 			<td th:text="${evento.nombre}"></td>
 			<td th:text="${evento.precio}"></td>
 			<td><a th:href="@{/eventos/detalle/{id}(id=${evento.idEvento})}">Detalle</a></td>
-			<td><a th:href="@{/eventos/eliminar/{id}(id=${evento.idEvento})}">Eliminar</a></td>
 			<td><a th:href="@{/eventos/editar/{id}(id=${evento.idEvento})}">Editar</a></td>
+			<td><a th:href="@{/eventos/cancelar/{id}(id=${evento.idEvento})}">Cancelar</a></td>
+			<td><a th:href="@{/eventos/eliminar/{id}(id=${evento.idEvento})}">Eliminar</a></td>
 		</tr>
 	</table>
-	
+
 	<a th:href="@{/eventos/alta}">Nuevo evento</a>
-	
+
 	<h3>Listado de eventos no activos:</h3>
 	<table border="2" width=100%>
 		<tr>
@@ -50,18 +55,19 @@
 			<th>Nombre</th>
 			<th>Precio</th>
 			<th>Detalle</th>
-			<th>Eliminar</th>
 			<th>Editar</th>
+			<th>Eliminar</th>
 		</tr>
 		<tr th:each="evento : ${eventosNoActivos}">
 			<td th:text="${evento.idEvento}"></td>
 			<td th:text="${evento.nombre}"></td>
 			<td th:text="${evento.precio}"></td>
 			<td><a th:href="@{/eventos/detalle/{id}(id=${evento.idEvento})}">Detalle</a></td>
-			<td><a th:href="@{/eventos/eliminar/{id}(id=${evento.idEvento})}">Eliminar</a></td>
 			<td><a th:href="@{/eventos/editar/{id}(id=${evento.idEvento})}">Editar</a></td>
+			<td><a th:href="@{/eventos/eliminar/{id}(id=${evento.idEvento})}">Eliminar</a></td>
 		</tr>
 	</table>
-	
+
 </body>
+
 </html>

@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Detalle</title>
+	<meta charset="UTF-8">
+	<title>Detalle</title>
 </head>
+
 <body>
 	<h1>Aplicación de eventos</h1>
-	
+
 	<h3>Detalle de evento</h3>
-	
-	
+
+
 
 	<p th:text="'ID evento: '+ ${evento.idEvento}"></p>
 	<p th:text="'Nombre evento: ' + ${evento.nombre}"></p>
@@ -22,8 +24,9 @@
 	<p th:text="'Aforo máximo del evento: ' +${evento.aforoMaximo}"></p>
 	<p th:text="'Mínimo asistencia del evento: ' +${evento.minimoAsistencia}"></p>
 	<p th:text="'Precio del evento: ' +${evento.precio}"></p>
-	<p th:text="'iD del tipo de evento: ' +${evento.tipo.idTipo}"></p>
-	
+	<p th:text="'Tipo de evento: ' +${evento.tipo.nombre}"></p>
+
 	<a th:href="@{/}">Volver Home</a>
 </body>
+
 </html>
