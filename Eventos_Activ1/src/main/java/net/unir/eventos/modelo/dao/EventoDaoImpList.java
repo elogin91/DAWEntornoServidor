@@ -9,23 +9,45 @@ import org.springframework.stereotype.Repository;
 import net.unir.eventos.modelo.javabean.Estado;
 import net.unir.eventos.modelo.javabean.Evento;
 
+/**
+ * Esta clase implementa la interfaz EventoDao y proporciona una implementación
+ * basada en una lista en memoria.
+ */
 @Repository
 public class EventoDaoImpList implements EventoDao {
 
+	/**
+	 * Lista que almacena los eventos.
+	 */
 	private List<Evento> lista;
+
+	/**
+	 * Instancia de TipoDao para obtener información de tipos de eventos.
+	 */
 	private TipoDao tipoDao;
+
+	/**
+	 * ID autoincremental para nuevos eventos.
+	 */
 	private static int idAuto;
 
 	static {
 		idAuto = 0;
 	}
 
+	/**
+	 * Constructor de la clase. Inicializa la lista, el TipoDao y carga eventos de
+	 * ejemplo.
+	 */
 	public EventoDaoImpList() {
 		lista = new ArrayList<>();
 		tipoDao = new TipoDaoImpList();
 		cargarLista();
 	}
 
+	/**
+	 * Método privado que carga eventos de ejemplo en la lista.
+	 */
 	private void cargarLista() {
 		lista.add(new Evento(1, "Cumple Maria", "Cumpleaños con tarta, piñata y actuación", new Date(2024 - 01 - 15),
 				180, "Avd. España s/n", Estado.ACTIVO, 'N', 50, 10, 350., tipoDao.findById(3)));
@@ -36,6 +58,9 @@ public class EventoDaoImpList implements EventoDao {
 		idAuto = 3;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Evento findById(int idEvento) {
 		for (int i = 0; i < lista.size(); i++) {
@@ -45,6 +70,9 @@ public class EventoDaoImpList implements EventoDao {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int insert(Evento evento) {
 		if (!lista.contains(evento)) {
@@ -55,6 +83,9 @@ public class EventoDaoImpList implements EventoDao {
 		return 0;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int delete(int idEvento) {
 		Evento evento = findById(idEvento);
@@ -64,6 +95,9 @@ public class EventoDaoImpList implements EventoDao {
 		return lista.remove(evento) ? 1 : 0;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int updateOne(Evento evento) {
 		int result = lista.indexOf(evento);
@@ -74,16 +108,25 @@ public class EventoDaoImpList implements EventoDao {
 		return 0;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Evento> findActives() {
 		return lista.stream().filter(it -> it.getEstado() == Estado.ACTIVO).toList();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Evento> findNotActives() {
 		return lista.stream().filter(it -> it.getEstado() == Estado.CANCELADO).toList();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int cancelEvent(int idEvento) {
 		Evento evento = findById(idEvento);

@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Detalle</title>
+	<link rel="stylesheet" th:href="@{/css/verDetalles.css}" />
 </head>
 
 <body>
@@ -26,7 +27,7 @@
 	<p th:text="'Precio del evento: ' +${evento.precio}"></p>
 	<p th:text="'Tipo de evento: ' +${evento.tipo.nombre}"></p>
 
-	<a th:href="@{/}">Volver Home</a>
+	<a class="styled-button" th:href="@{/}">Volver Home</a>
 </body>
 
 </html>

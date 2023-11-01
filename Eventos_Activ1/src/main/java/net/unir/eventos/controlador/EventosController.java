@@ -19,15 +19,33 @@ import net.unir.eventos.modelo.dao.EventoDao;
 import net.unir.eventos.modelo.dao.TipoDao;
 import net.unir.eventos.modelo.javabean.Evento;
 
+/**
+ * Controlador encargado de gestionar las operaciones relacionadas con los
+ * eventos.
+ */
 @RequestMapping("eventos")
 @Controller
 public class EventosController {
 
+	/**
+	 * Instancia de EventoDao para acceder a la persistencia de eventos.
+	 */
 	@Autowired
 	private EventoDao edao;
+
+	/**
+	 * Instancia de TipoDao para acceder a la persistencia de tipos de eventos.
+	 */
 	@Autowired
 	private TipoDao tdao;
 
+	/**
+	 * Método para eliminar un evento a partir de su ID.
+	 *
+	 * @param idEvento ID del evento a eliminar.
+	 * @param model    Modelo de datos para agregar mensajes.
+	 * @return Redirecciona a la página principal.
+	 */
 	@GetMapping("/eliminar/{id}")
 	public String eliminarEvento(@PathVariable("id") int idEvento, Model model) {
 		if (edao.delete(idEvento) == 1)
@@ -37,6 +55,14 @@ public class EventosController {
 		return "forward:/";
 	}
 
+	/**
+	 * Método para ver los detalles de un evento.
+	 *
+	 * @param idEvento ID del evento a ver.
+	 * @param model    Modelo de datos para agregar el evento o mensajes.
+	 * @return Retorna la vista para ver los detalles del evento o redirecciona a la
+	 *         página principal si no existe.
+	 */
 	@GetMapping("/detalle/{id}")
 	public String verEvento(@PathVariable("id") int idEvento, Model model) {
 		Evento evento = edao.findById(idEvento);
@@ -49,14 +75,28 @@ public class EventosController {
 		}
 	}
 
+	/**
+	 * Método para mostrar el formulario de alta de un evento.
+	 *
+	 * @param model Modelo de datos para agregar un nuevo evento y la lista de tipos
+	 *              de eventos.
+	 * @return Retorna la vista para el formulario de alta.
+	 */
 	@GetMapping("/alta")
 	public String mostrarFormularioAlta(Model model) {
-		
+
 		model.addAttribute("evento", new Evento());
 		model.addAttribute("tipos", tdao.findAll());
 		return "formularioAlta";
 	}
 
+	/**
+	 * Método para procesar el formulario de alta de un evento.
+	 *
+	 * @param evento Objeto Evento a dar de alta.
+	 * @param ratt   Atributos para redireccionar con mensajes.
+	 * @return Redirecciona a la página principal.
+	 */
 	@PostMapping("/alta")
 	public String procesarFormularioAlta(Evento evento, RedirectAttributes ratt) {
 		evento.setTipo(tdao.findById(evento.getTipo().getIdTipo()));
@@ -69,6 +109,15 @@ public class EventosController {
 
 	}
 
+	/**
+	 * Método para mostrar el formulario de edición de un evento.
+	 *
+	 * @param idEvento ID del evento a editar.
+	 * @param model    Modelo de datos para agregar el evento y la lista de tipos de
+	 *                 eventos.
+	 * @return Retorna la vista para el formulario de edición o redirecciona a la
+	 *         página principal si no existe.
+	 */
 	@GetMapping("/editar/{id}")
 	public String editarEvento(@PathVariable("id") int idEvento, Model model) {
 		Evento evento = edao.findById(idEvento);
@@ -83,6 +132,14 @@ public class EventosController {
 		}
 	}
 
+	/**
+	 * Método para procesar la edición de un evento.
+	 *
+	 * @param evento   Objeto Evento con los nuevos valores.
+	 * @param idEvento ID del evento a editar.
+	 * @param ratt     Atributos para redireccionar con mensajes.
+	 * @return Redirecciona a la página principal.
+	 */
 	@PostMapping("/editar/{id}")
 	public String procesarEditarEvento(Evento evento, @PathVariable("id") int idEvento, RedirectAttributes ratt) {
 		evento.setIdEvento(idEvento);
@@ -96,6 +153,13 @@ public class EventosController {
 		return "redirect:/";
 	}
 
+	/**
+	 * Método para cancelar un evento.
+	 *
+	 * @param idEvento ID del evento a cancelar.
+	 * @param model    Modelo de datos para agregar mensajes.
+	 * @return Redirecciona a la página principal.
+	 */
 	@GetMapping("/cancelar/{id}")
 	public String procesarCancelarEvento(@PathVariable("id") int idEvento, Model model) {
 		if (edao.cancelEvent(idEvento) == 1)
@@ -105,6 +169,12 @@ public class EventosController {
 		return "forward:/";
 	}
 
+	/**
+	 * Método de inicialización del controlador. Registra un editor personalizado
+	 * para fechas.
+	 *
+	 * @param binder WebDataBinder para registrar el editor de fechas.
+	 */
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");

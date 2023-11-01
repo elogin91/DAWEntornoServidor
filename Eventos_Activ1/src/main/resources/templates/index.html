@@ -4,14 +4,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Eventos</title>
-	<link rel="stylesheet" href="@{/css/index.css}"/>
+	<link rel="stylesheet" th:href="@{/css/index.css}" />
 </head>
 
 <body>
 	<h1>Aplicación de eventos</h1>
 	<h3>Mensaje: <span th:text="${mensaje}"></span></h3>
 
-	<table border="2" width=100%>
+	<table class="styled-table">
 		<tr>
 			<td><a href="">Tipos</a></td>
 			<td><a href="">Eventos</a></td>
@@ -25,7 +25,7 @@
 
 	<h3>Listado de eventos activos:</h3>
 
-	<table border="2" width=100%>
+	<table class="styled-table">
 		<tr>
 			<th>Id</th>
 			<th>Nombre</th>
@@ -46,10 +46,10 @@
 		</tr>
 	</table>
 
-	<a th:href="@{/eventos/alta}">Nuevo evento</a>
+	<a class="styled-button" th:href="@{/eventos/alta}">Nuevo evento</a>
 
 	<h3>Listado de eventos no activos:</h3>
-	<table border="2" width=100%>
+	<table class="styled-table">
 		<tr>
 			<th>Id</th>
 			<th>Nombre</th>

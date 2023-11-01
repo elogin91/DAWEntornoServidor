@@ -7,23 +7,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import net.unir.eventos.modelo.dao.EventoDao;
 
+/**
+ * Controlador encargado de gestionar la página principal (home).
+ */
 @Controller
 public class HomeController {
 
-	// Busca una clase en tiempo de ejecución que implementar la interface y crea un
-	// objeto (ClienteDao) singleton
+	/**
+	 * Instancia de EventoDao para acceder a la persistencia de eventos.
+	 */
 	@Autowired
 	private EventoDao edao;
 
-	//Recibimos una petición inicial Get y devolvemos la vista correspondiente a la home
+	/**
+	 * Método para mostrar la página principal.
+	 * 
+	 * @param model Modelo de datos para agregar la lista de eventos activos y no
+	 *              activos.
+	 * @return Retorna la vista para la página principal.
+	 */
 	@GetMapping("/")
 	public String mostrarHome(Model model) {
-		
-		//TODO mostrar solo los activos
+		// Agrega la lista de eventos activos y no activos al modelo
 		model.addAttribute("eventosActivos", edao.findActives());
 		model.addAttribute("eventosNoActivos", edao.findNotActives());
-		
-		//Mostrar los cancelados
+
 		return "index";
 	}
 }
