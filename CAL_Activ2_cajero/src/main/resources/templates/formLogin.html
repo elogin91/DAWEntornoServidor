@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Cajero 2023</title>
+<!--	<link rel="stylesheet" th:href="" />-->
+</head>
+
+<body>
+	<h1>Aplicación de cajero</h1>
+	<h3>Mensaje: <span th:text="${mensaje}"></span></h3>
+
+	<form th:action="@{/login}" method="post">
+		<div>
+			<label for="idCuenta">Por favor, introduzca su número de cuenta</label>
+			<input type="number" name="idCuenta" required />
+		</div>
+		<input type="submit" value="Entrar" />
+	</form>
+</body>
+
+</html>
