@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Cajero 2023</title>
+<!--	<link rel="stylesheet" th:href="" />-->
+</head>
+
+<body>
+	<form th:action="@{/ingresar}" method="post">
+		<div>
+			<label>
+				Introduce la cantidad a Ingresar:
+			</label>
+			<input type="number" name="cantidad" required/>
+			<input type="submit" value="Ingresar"/>
+		</div>
+	</form>
+	
+</body>
+
+</html>

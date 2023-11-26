@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import cajero.modelo.entitybean.Cuenta;
 
-public interface CuentaRepository extends JpaRepository<Cuenta, Integer>{
+public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
 
 }

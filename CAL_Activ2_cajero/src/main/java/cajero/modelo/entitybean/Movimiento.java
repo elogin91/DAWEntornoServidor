@@ -7,12 +7,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name="movimientos")
@@ -21,11 +24,12 @@ public class Movimiento {
 	@Column(name="id_movimiento")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idMovimiento;
-	@Column(name="id_cuenta")
-	private int idCuenta;
+	private Integer idMovimiento;
+	@ManyToOne
+	@JoinColumn(name="id_cuenta")
+	private Cuenta cuenta;
 	@Column(name="fecha")
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 	@Column(name="cantidad")
 	private Double cantidad;

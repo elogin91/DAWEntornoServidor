@@ -16,8 +16,7 @@ public class CuentaDaoImpl implements CuentaDao{
 
 	@Override
 	public List<Cuenta> buscarTodas() {
-		// TODO Auto-generated method stub
-		return null;
+		return crepo.findAll();
 	}
 
 	@Override
@@ -26,9 +25,9 @@ public class CuentaDaoImpl implements CuentaDao{
 	}
 
 	@Override
-	public int modificar(Cuenta cuenta) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public Cuenta reintegro(Cuenta cuenta, Double cantidad) {
+		cuenta.setSaldo(cuenta.getSaldo() + cantidad);
+		return crepo.save(cuenta);
+		}
 
 }

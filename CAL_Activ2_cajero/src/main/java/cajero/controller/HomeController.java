@@ -23,10 +23,10 @@ public class HomeController {
 	}
 
 	@PostMapping("/login")
-	public String procLogin(RedirectAttributes ratt, HttpSession sesion, @RequestParam int idCuenta) {
+	public String procLogin(RedirectAttributes ratt, HttpSession sesion, @RequestParam Integer idCuenta) {
 		Cuenta cuenta = cdao.buscarUna(idCuenta);
 		if (cuenta != null) {
-			sesion.setAttribute("cuenta", cuenta);
+			sesion.setAttribute("cuenta", idCuenta);
 			return "redirect:/menu";
 		}
 		ratt.addFlashAttribute("mensaje", "Cuenta no existe.");

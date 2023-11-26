@@ -7,5 +7,5 @@ import cajero.modelo.entitybean.Cuenta;
 public interface CuentaDao {
 	List <Cuenta>buscarTodas();
 	Cuenta buscarUna(int idCuenta);
-	int modificar (Cuenta cuenta);
+	Cuenta reintegro(Cuenta cuenta, Double cantidad);
 }

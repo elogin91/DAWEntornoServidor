@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Cajero 2023</title>
+<!--	<link rel="stylesheet" th:href="" />-->
+</head>
+
+<body>
+	<h3>Mensaje: <span th:text="${mensaje}"></span></h3>
+	<a th:href="@{/ingresar}">Ingresar</a>
+	<a th:href="@{/extraer}">Extraer</a>
+	<a th:href="@{/movimientos}">Ver Movimientos</a>
+	<a th:href="@{/transferencia}">Transferencia</a>
+	<a th:href="@{/logout}">Cerrar Sesion</a>
+	
+</body>
+
+</html>
