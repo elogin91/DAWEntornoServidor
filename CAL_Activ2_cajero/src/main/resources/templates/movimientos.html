@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Cajero 2023</title>
+	<!--	<link rel="stylesheet" th:href="" />-->
+</head>
+
+<body>
+	<h3>Listado de movimientos:</h3>
+
+	<table class="styled-table">
+		<tr>
+			<th>Fecha</th>
+			<th>Tipo de operación</th>
+			<th>Cantidad</th>
+
+		</tr>
+		<tr th:each="movimiento : ${movimientos}">
+			<td th:text="${movimiento.fecha}"></td>
+			<td th:text="${movimiento.operacion}"></td>
+			<td th:text="${movimiento.cantidad}"></td>
+		</tr>
+	</table>
+	<table class="styled-table">
+		<tr>
+			<th>Saldo</th>
+		</tr>
+		<tr>
+			<td th:text="${cuenta.saldo}"></td>
+		</tr>
+	</table>
+
+	<a class="styled-button" th:href="@{/menu}">Volver al menu</a>
+
+</body>
+
+</html>

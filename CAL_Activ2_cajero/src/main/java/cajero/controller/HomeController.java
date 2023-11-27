@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
- @Autowired
+	@Autowired
 	private CuentaDao cdao;
 
 	@GetMapping("/")
@@ -33,12 +33,17 @@ public class HomeController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/menu" )
+	@GetMapping("/menu")
 	public String menu(HttpSession sesion) {
-		if(sesion.getAttribute("cuenta") == null) {
+		if (sesion.getAttribute("cuenta") == null) {
 			return "redirect:/";
 		}
 		return "menu";
 	}
 
+	@GetMapping("/logout")
+	public String logOut(HttpSession sesion) {
+		sesion.invalidate();
+		return "formLogin";
+	}
 }
