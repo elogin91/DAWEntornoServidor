@@ -4,24 +4,30 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Cajero 2023</title>
-<!--	<link rel="stylesheet" th:href="" />-->
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
 </head>
 
 <body>
+	<h2>Operación transferencia entre cuentas:</h2>
+	<h3>Cuenta cliente: <span th:text="${session.idCuenta}"></span></h3>
+	<h3>Saldo diponible: <span th:text="${saldo}"></span></h3>
 	<form th:action="@{/transferencia}" method="post">
 		<div>
 			<label>
 				Introduce la cuenta beneficiaria de la transferencia:
 			</label>
-			<input type="number" name="idCuentaDestino" required/>
+			<input type="number" name="idCuentaDestino" required />
 			<label>
 				Introduce la cantidad a Ingresar:
 			</label>
-			<input type="number" name="cantidad"  min="0.01" step="0.01" required/>
-			<input type="submit" value="Transferir"/>
+			<input type="number" name="cantidad" min="0.01" step="0.01" required />
+			<input class="styled-button" type="submit" value="Transferir" />
 		</div>
 	</form>
-	
+
+	<a th:href="@{/menu}">Volver al menu</a>
+	<a th:href="@{/logout}">Cerrar Sesion</a>
+
 </body>
 
 </html>

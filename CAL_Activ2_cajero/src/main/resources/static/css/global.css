@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+h1 {
+    color: #3498db;
+}
+
+h2 {
+    color: #333;
+}
+
+a {
+    display: inline-block;
+    width: 45%; /* Ajusta el ancho según tus preferencias */
+    margin: 10px;
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #3498db;
+    border: 1px solid #2980b9;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: #2980b9;
+}
+
+/* Estilos para las tablas */
+table.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+table.styled-table th, table.styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+table.styled-table th {
+    background-color: #3498db;
+    color: #fff;
+}
+
+table.styled-table td {
+    background-color: #fff;
+}
+
+/* Estilos para los botones */
+.styled-button {
+    display: inline-block;
+    width: 45%;
+    margin: 10px;
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #3498db;
+    border: 1px solid #2980b9;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.styled-button:hover {
+    background-color: #2980b9;
+}
+
+/* Estilos para labels e inputs */
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+input[type="number"],
+input[type="text"],
+input[type="submit"] {
+    padding: 10px;
+    margin: 5px 0;
+    width: 50%;
+    box-sizing: border-box;
+}

@@ -4,19 +4,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Cajero 2023</title>
-<!--	<link rel="stylesheet" th:href="" />-->
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
 </head>
 
 <body>
 	<h1>Aplicación de cajero</h1>
-	<h3>Mensaje: <span th:text="${mensaje}"></span></h3>
+	
+	<h3><span th:text="${mensaje}"></span></h3>
 
 	<form th:action="@{/login}" method="post">
 		<div>
 			<label for="idCuenta">Por favor, introduzca su número de cuenta</label>
 			<input type="number" name="idCuenta" required />
 		</div>
-		<input type="submit" value="Entrar" />
+		<input class="styled-button" type="submit" value="Entrar" />
 	</form>
 </body>
 
