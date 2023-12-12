@@ -15,14 +15,14 @@
 			<th>Nombre</th>
 			<th>Apellido  1</th>
 			<th>Apellido 2</th>
-			<th>Ver detalle</th>
+			<th>Ver pedidos</th>
 
 		</tr>
 		<tr th:each="cliente : ${clientes}">
 			<td th:text="${cliente.nombre}"></td>
 			<td th:text="${cliente.apellido1}"></td>
 			<td th:text="${cliente.apellido2}"></td>
-			<td ><a th:href="@{/detalleCliente/{id}(id=${cliente.idCliente})}">Detalle</a></td>
+			<td ><a th:href="@{/detalleCliente/{id}(id=${cliente.idCliente})}">Pedidos</a></td>
 		</tr>
 	</table>
 

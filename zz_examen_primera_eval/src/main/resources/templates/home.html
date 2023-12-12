@@ -15,17 +15,17 @@
 			<th>Nombre</th>
 			<th>Apellido  1</th>
 			<th>Apellido 2</th>
-			<th>Ver detalle</th>
+			<th>Ver pedidos</th>
 
 		</tr>
 		<tr th:each="comercial : ${comerciales}">
 			<td th:text="${comercial.nombre}"></td>
 			<td th:text="${comercial.apellido1}"></td>
 			<td th:text="${comercial.apellido2}"></td>
-			<td ><a th:href="@{/detalleComercial/{id}(id=${comercial.idComercial})}">Detalle</a></td>
+			<td ><a th:href="@{/detalleComercial/{id}(id=${comercial.idComercial})}">Pedidos</a></td>
 		</tr>
 	</table>
-
+	<a th:href="@{/altaComercial}">Alta Comercial</a>
 	<a th:href="@{/clientes}">Clientes</a>
 	<a th:href="@{/pedidos}">Pedidos</a>
 
