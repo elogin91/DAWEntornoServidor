@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<nav>
+	<ul class="nav justify-content-end">
+      <li  sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link"
+							th:href="@{/login}">Iniciar Sesion</a></li>
+		<li  sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link"
+			th:href="@{/signup}">Registrarse</a></li>
+	
+		<li  sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link"
+				th:href="@{/logout}">Cerrar Sesion</a></li>	 
+    </ul>
+	
+	
+</nav>
+<h1>Datos Producto </h1>
+
+<p th:text="${producto.codigo }"></p>
+<p th:text="${producto.descripcion }"></p>
+<p th:text="${producto.marca }"></p>
+<p th:text="${producto.color }"></p>
+<p th:text="${producto.precioUnitario *2}"></p>
+<p th:text="${producto.familia.descripcion }"></p>
+
+
+</body>
+</html>
