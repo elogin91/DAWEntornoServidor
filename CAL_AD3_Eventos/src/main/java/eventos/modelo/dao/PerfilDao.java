@@ -1,5 +1,13 @@
 package eventos.modelo.dao;
 
-public interface PerfilDao {
+import java.util.List;
 
+import eventos.modelo.entitis.Perfil;
+
+public interface PerfilDao {
+	Perfil altaPerfil(Perfil perfil);
+	Perfil modificarPerfil(Perfil perfil);
+	Perfil buscarUnoPerfil(Perfil perfil);
+	List<Perfil> buscarTodosPerfil();
+	
 }

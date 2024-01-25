@@ -148,5 +148,4 @@ public class Evento implements Serializable {
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
-
 }
