@@ -33,8 +33,8 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	}
 
 	@Override
-	public Usuario buscarUnUsuario(Usuario usuario) {
-		return usuarioRepository.findByUsername(usuario.getUsername());
+	public Usuario buscarUnUsuario(String username) {
+		return usuarioRepository.findByUsername(username);
 	}
 
 }

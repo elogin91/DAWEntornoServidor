@@ -53,9 +53,18 @@ public class ReservaDaoImpl implements ReservaDao {
 	}
 
 	@Override
-	public List<Reserva> buscarTodasReservasPorCliente(String Username) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Reserva> buscarReservasPorCliente(String username) {
+		return reservaRepository.findReservasPorCliente(username);
+	}
+
+	@Override
+	public List<Reserva> buscarReservasPorClienteYEvento(String username, int idEvento) {
+		return reservaRepository.findReservasPorClienteYEvento(username, idEvento);
+	}
+
+	@Override
+	public List<Reserva> buscarReservasPorEvento(int idEvento) {
+		return reservaRepository.findByIdEvento(idEvento);
 	}
 
 }

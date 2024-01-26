@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>APP Eventos</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+			<a class="navbar-brand" th:href="@{/}">AppEventos</a>
+
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+
+					<li sec:authorize="hasRole('ROLE_GESTOR')" class="nav-item active">
+						<a class="nav-link" th:href="@{/app/tipos/todos}">Crear evento</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/activos}">Activos</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/destacados}">Destacados</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/}">Tipos de eventos</a>
+					</li>
+
+					<li sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')"
+						class="nav-item active">
+						<a class="nav-link" th:href="@{/app/tipos/todos}">Mis Reservas</a>
+					</li>
+
+
+					<li sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR')" class="nav-item">
+						<a class="nav-link" th:href="@{/app/usuarios/todos}">Usuarios</a>
+					</li>
+
+
+					<li sec:authorize="hasRole('ROLE_ADMINISTRADOR')" class="nav-item">
+						<a class="nav-link" th:href="@{/app/perfiles/todos}">Perfiles<a />
+					</li>
+				</ul>
+			</div>
+			<spam sec:authentication="name"></spam>
+			<ul class="nav justify-content-end">
+				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/index}">Iniciar
+						Sesion</a></li>
+				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link"
+						th:href="@{/signup}">Registrarse</a></li>
+
+				<li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/logout}">Cerrar
+						Sesion</a></li>
+			</ul>
+
+		</nav>
+	</header>
+	<div class="container">
+		<h1 class="text-primary">Detalle del Evento</h1>
+		<div>
+			<p th:text="'Nombre evento: ' + ${evento.nombre}"></p>
+			<p th:text="'Descripcion: ' +${evento.descripcion}"></p>
+			<p th:text="'Dirección evento: ' +${evento.direccion}"></p>
+			<p th:text="'Fecha de inicio: ' +${#dates.format(evento.fechaInicio, 'dd - MM - yyyy')}"></p>
+			<p th:text="'Duracion evento: ' +${evento.duracion}"></p>
+			<p th:text="'Aforo máximo del evento: ' +${evento.aforoMaximo}"></p>
+			<p th:text="'Mínimo asistencia del evento: ' +${evento.minimoAsistencia}"></p>
+			<p th:text="'Precio del evento: ' +${evento.precio}"></p>
+			<img src="/images/evento.jpg" alt="imagen evento demo" class="rounded float-right"style="max-width:20%;"/>
+
+		</div>
+		<div>
+			<p th:text="'Precio del evento: ' +${evento.precio}"></p>
+			<p>Reservas disponibles para el evento: <span th:text="${aforoDisponible}"></span></p>
+			<form th:action="@{/reservas/alta}" th:object="${reserva}" method="post" sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')">
+				<label for="cantidad">cantidad a reservar</label>
+				<input type="number" name="cantidad" id="cantidad" min="1" max="10" th:value="${cantidadReservas}">
+				<button class="btn btn-success btn-m" type="submit">Realizar Reserva</button>
+			</form>
+			
+		</div>
+		<a sec:authorize="!isAuthenticated()" class="btn btn-success btn-sm" th:href="@{/index}">Iniciar Sesion</a></li>
+		<a sec:authorize="!isAuthenticated()" class="btn btn-success btn-sm" th:href="@{/signup}">Registrarse</a></li>
+		<a class="btn btn-primary btn-sm" th:href="@{/}">Volver Home</a>
+
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+			crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+			crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+			crossorigin="anonymous"></script>
+</body>
+
+</html>
