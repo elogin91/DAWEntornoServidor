@@ -8,7 +8,7 @@ public interface ReservaDao {
 
 	Reserva altaReserva(Reserva reserva);
 
-	Reserva modificarReserva(Reserva reserva);
+	Reserva modificarReserva(Reserva reserva, int cantidadNueva);
 
 	Reserva cancelarReserva(Reserva reserva);
 

@@ -17,11 +17,7 @@ public class ReservaDaoImpl implements ReservaDao {
 	@Override
 	public Reserva altaReserva(Reserva reserva) {
 
-		List<Reserva> reservaAntigua = reservaRepository
-				.findReservasPorClienteYEvento(reserva.getUsuario().getUsername(), reserva.getEvento().getIdEvento());
-		//Funciona con una nueva reserva, cuando la antigua es null ?
-		if (reserva.validarCantidad(reservaRepository.countByEvento(reserva.getEvento()),
-				reservaAntigua.stream().mapToInt(it -> it.getCantidad()).sum())) {
+		if (reserva.validarCantidad(reservaRepository.countByEvento(reserva.getEvento()))){
 			try {
 				return reservaRepository.save(reserva);
 			} catch (Exception e) {
@@ -30,17 +26,27 @@ public class ReservaDaoImpl implements ReservaDao {
 			}
 		}
 		return null;
+		
 	}
 
+	private int calcularReservasTotales (int reservasRealizadas, Reserva reservasAntiguasRealizadasPorCliente) {
+		int reservasTotales;
+		if (reservasAntiguasRealizadasPorCliente !=null) {
+			reservasTotales = reservasRealizadas+ (reservasAntiguasRealizadasPorCliente.getCantidad());
+		}
+		else {
+			reservasTotales = reservasRealizadas;
+		}
+		return reservasTotales;
+	}
+	
 	@Override
-	public Reserva modificarReserva(Reserva reserva) {
-
-		List<Reserva> reservaAntigua = reservaRepository
-				.findReservasPorClienteYEvento(reserva.getUsuario().getUsername(), reserva.getEvento().getIdEvento());
-		if (reserva.validarCantidad(reservaRepository.countByEvento(reserva.getEvento()),
-				reservaAntigua.stream().mapToInt(it -> it.getCantidad()).sum())) {
+	public Reserva modificarReserva(Reserva reservaAntigua, int cantidadNueva) {
+		
+		if (reservaAntigua.validarCantidad(calcularReservasTotales(reservaRepository.countByEvento(reservaAntigua.getEvento()), reservaAntigua ))) {
 			try {
-				return reservaRepository.save(reserva);
+				reservaAntigua.setCantidad(cantidadNueva);
+				return reservaRepository.save(reservaAntigua);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				return null;

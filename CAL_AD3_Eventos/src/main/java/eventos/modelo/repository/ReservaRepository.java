@@ -17,7 +17,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
 	@Query("select r from Reserva r where r.usuario.username=?1 AND r.evento.idEvento=?2")
 	public List<Reserva> findReservasPorClienteYEvento(String username, int idEvento);
 
-	// TODO del me
 	public int countByEvento(Evento evento);
 
 	@Query("select r from Reserva r where r.evento.idEvento=?1")

@@ -34,6 +34,7 @@ public class EventosController {
 			}
 			List<Reserva> reservasDelEvento = reservaDao.buscarReservasPorEvento(idEvento);
 			model.addAttribute("aforoDisponible", evento.getAforoMaximo() - reservasDelEvento.stream().mapToInt(it -> it.getCantidad()).sum());
+			model.addAttribute("reserva", !reservasDelEvento.isEmpty() ? reservasDelEvento.get(0) : null);
 			return "detalleEvento";
 		} else {
 			model.addAttribute("mensaje", "El evento buscado no existe");

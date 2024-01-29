@@ -15,16 +15,29 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li sec:authorize="hasRole('ROLE_GESTOR')" class="nav-item active">
-						<a class="nav-link" th:href="@{/app/tipos/todos}">Crear evento</a>
+						<a class="nav-link " th:href="@{/app/tipos/todos}">Crear evento</a>
+					</li>
+					<li class="nav-item">
+						<span class="nav-link">Eventos:</span>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" th:href="@{/eventos/activos}">Activos</a>
+
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" th:href="@{/eventos/destacados}">Destacados</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" th:href="@{/}">Tipos de eventos</a>
+						<a class="nav-link" th:href="@{/}">Por tipos:</a>
+					</li>
+					<li class="nav-item">
+						<select class="nav-link" th:field="*{tipos}">
+							<option  class="nav-link" th:each="tipo : ${tipos}"
+                    				th:text="${tipo.nombre}"
+                    				th:value="${tipo.idTipo}">
+                    		</option>
+							
+						</select>
 					</li>
 					<li sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')"
 						class="nav-item active">

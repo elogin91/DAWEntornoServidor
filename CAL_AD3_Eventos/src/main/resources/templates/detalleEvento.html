@@ -69,7 +69,10 @@
 		<div>
 			<p th:text="'Precio del evento: ' +${evento.precio}"></p>
 			<p>Reservas disponibles para el evento: <span th:text="${aforoDisponible}"></span></p>
-			<form th:action="@{/reservas/alta}" th:object="${reserva}" method="post"
+
+			<form
+				th:action="@{/reservas/evento{idEvento}/{path}(path=${reserva?.idReserva} ? 'modificar/' + ${reserva.idReserva} : 'alta', idEvento=${evento.idEvento})}"
+				th:object="${reserva}" method="post"
 				sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')">
 				<label for="cantidad">cantidad a reservar</label>
 				<input type="number" name="cantidad" id="cantidad" min="1" max="10" th:value="${cantidadReservas}">
