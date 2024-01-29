@@ -12,7 +12,7 @@ public interface ReservaDao {
 
 	Reserva cancelarReserva(Reserva reserva);
 
-	Reserva buscarUnaReserva(Reserva reserva);
+	Reserva buscarUnaReserva(int idEvent);
 
 	List<Reserva> buscarReservasPorCliente(String username);
 

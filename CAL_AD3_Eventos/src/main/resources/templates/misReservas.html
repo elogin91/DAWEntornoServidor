@@ -11,65 +11,60 @@
 <body>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-
 			<a class="navbar-brand" th:href="@{/}">AppEventos</a>
-
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
-
 					<li sec:authorize="hasRole('ROLE_GESTOR')" class="nav-item active">
 						<a class="nav-link" th:href="@{/app/tipos/todos}">Crear evento</a>
 					</li>
-
 					<li class="nav-item">
-						<a class="nav-link" th:href="@{/activos}">Activos</a>
+						<a class="nav-link" th:href="@{/eventos/activos}">Activos</a>
 					</li>
-
 					<li class="nav-item">
-						<a class="nav-link" th:href="@{/destacados}">Destacados</a>
+						<a class="nav-link" th:href="@{/eventos/destacados}">Destacados</a>
 					</li>
-
 					<li class="nav-item">
 						<a class="nav-link" th:href="@{/}">Tipos de eventos</a>
 					</li>
-
 					<li sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')"
 						class="nav-item active">
-						<a class="nav-link" th:href="@{/app/tipos/todos}">Mis Reservas</a>
+						<a class="nav-link" th:href="@{/reservas/misReservas}">Mis Reservas</a>
 					</li>
 				</ul>
 			</div>
-			<spam sec:authentication="name"></spam>
+			<spam sec:authorize="!isAuthenticated()">Invitado</spam>
+			<spam sec:authorize="isAuthenticated()" sec:authentication="name"></spam>
 			<ul class="nav justify-content-end">
 				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/index}">Iniciar
 						Sesion</a></li>
 				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link"
 						th:href="@{/signup}">Registrarse</a></li>
-
 				<li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/logout}">Cerrar
 						Sesion</a></li>
 			</ul>
-
 		</nav>
 	</header>
 	<div class="container">
 		<h1 class="text-primary">Lista de mis reservas</h1>
-		
+
 		<h3><span th:text="${mensaje}"></span></h3>
 		<table class="table table-striped table-sm">
 			<th>Nombre Evento</th>
 			<th>Fecha Inicio</th>
 			<th>Precio Unidad</th>
 			<th>Cantidad</th>
+			<th>Opciones</th>
 
-			<tr th:each="reserva : ${reservas}">
+			<tr th:each="reserva : ${misReservas}">
 				<td th:text="${reserva.evento.nombre}"></td>
 				<td th:text="${reserva.evento.fechaInicio}"></td>
 				<td th:text="${reserva.evento.precio}"></td>
 				<td th:text="${reserva.cantidad}"></td>
 				<td>
-					<a th:href="@{/eventos/verUno/{id}(id=${eventoDestacado.idEvento})}" class="btn btn-warning btn-sm">Modificar</a>
-					<a th:href="@{/eventos/reserva/eliminar}" class="btn btn-danger btn-sm">Cancelar</a>
+					<a th:href="@{/eventos/verUno/{id}(id=${reserva.evento.idEvento})}"
+						class="btn btn-warning btn-sm">Modificar</a>
+					<a th:href="@{/eventos/reservas/eliminar{id}(id=${reserva.idReserva})}"
+						class="btn btn-danger btn-sm">Cancelar</a>
 				</td>
 
 			</tr>

@@ -16,7 +16,12 @@ public class ReservaDaoImpl implements ReservaDao {
 
 	@Override
 	public Reserva altaReserva(Reserva reserva) {
-		if (reserva.validarCantidad(reservaRepository.countByEvento(reserva.getEvento()))) {
+
+		List<Reserva> reservaAntigua = reservaRepository
+				.findReservasPorClienteYEvento(reserva.getUsuario().getUsername(), reserva.getEvento().getIdEvento());
+		//Funciona con una nueva reserva, cuando la antigua es null ?
+		if (reserva.validarCantidad(reservaRepository.countByEvento(reserva.getEvento()),
+				reservaAntigua.stream().mapToInt(it -> it.getCantidad()).sum())) {
 			try {
 				return reservaRepository.save(reserva);
 			} catch (Exception e) {
@@ -29,7 +34,11 @@ public class ReservaDaoImpl implements ReservaDao {
 
 	@Override
 	public Reserva modificarReserva(Reserva reserva) {
-		if (reserva.validarCantidad(reservaRepository.countByEvento(reserva.getEvento()))) {
+
+		List<Reserva> reservaAntigua = reservaRepository
+				.findReservasPorClienteYEvento(reserva.getUsuario().getUsername(), reserva.getEvento().getIdEvento());
+		if (reserva.validarCantidad(reservaRepository.countByEvento(reserva.getEvento()),
+				reservaAntigua.stream().mapToInt(it -> it.getCantidad()).sum())) {
 			try {
 				return reservaRepository.save(reserva);
 			} catch (Exception e) {
@@ -42,14 +51,17 @@ public class ReservaDaoImpl implements ReservaDao {
 
 	@Override
 	public Reserva cancelarReserva(Reserva reserva) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			reservaRepository.delete(reserva);
+			return reserva;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
-	public Reserva buscarUnaReserva(Reserva reserva) {
-		// TODO Auto-generated method stub
-		return null;
+	public Reserva buscarUnaReserva(int idReserva) {
+		return reservaRepository.findById(idReserva).orElse(null);
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public class EventosController {
 	private ReservaDao reservaDao;
 
 	@GetMapping("/eventos/verUno/{id}")
-	public String verUno(@PathVariable("id") int idEvento, Model model, Authentication authentication) {
+	public String verUnEvento(@PathVariable("id") int idEvento, Model model, Authentication authentication) {
 		Evento evento = eventoDao.buscarUnEvento(idEvento);
 		if (evento != null) {
 			model.addAttribute("evento", evento);
@@ -40,9 +40,19 @@ public class EventosController {
 			return "forward:/";
 		}
 	}
-
-	@GetMapping("/login")
-	public String entrandoUsuario() {
-		return "/";
+	
+	@GetMapping("/eventos/destacados")
+	public String mostrarEventosDestacados(Model model) {
+		model.addAttribute("eventos", eventoDao.buscarEventosDestacados());
+		model.addAttribute("mensaje", "Lista de eventos destacados.");
+		return "eventos";
 	}
+	
+	@GetMapping("/eventos/activos")
+	public String mostrarEventosActivos(Model model) {
+		model.addAttribute("eventos", eventoDao.buscarEventosActivos());
+		model.addAttribute("mensaje", "Lista de eventos activos.");
+		return "eventos";
+	}
+
 }

@@ -45,7 +45,7 @@
 		</nav>
 	</header>
 	<div class="container">
-		<h1 class="text-primary">Lista de eventos destacados.</h1>
+		<h1 class="text-primary"><span th:text="${mensaje}"></span></h1>
 		<div sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR')">
 			<a th:href="@{/eventos/alta}" class="btn btn-primary btn-sm">Nuevo Evento</a></td>
 		</div>
@@ -56,12 +56,12 @@
 			<th>Fecha Inicio</th>
 			<th>Opciones</th>
 
-			<tr th:each="eventoDestacado : ${eventosDestacados}">
-				<td th:text="${eventoDestacado.nombre}"></td>
-				<td th:text="${eventoDestacado.aforoMaximo}"></td>
-				<td th:text="${eventoDestacado.fechaInicio}"></td>
-				<td><a th:href="@{/eventos/verUno/{id}(id=${eventoDestacado.idEvento})}"
-						class="btn btn-success btn-sm">Ver detalle</a>
+			<tr th:each="evento : ${eventos}">
+				<td th:text="${evento.nombre}"></td>
+				<td th:text="${evento.aforoMaximo}"></td>
+				<td th:text="${evento.fechaInicio}"></td>
+				<td><a th:href="@{/eventos/verUno/{id}(id=${evento.idEvento})}" class="btn btn-success btn-sm">Ver
+						detalle</a>
 				</td>
 			</tr>
 		</table>

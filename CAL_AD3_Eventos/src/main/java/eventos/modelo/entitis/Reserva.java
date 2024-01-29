@@ -98,16 +98,16 @@ public class Reserva implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public Boolean validarCantidad(int reservasRealizadas) {
-		return validarCantidadMaxima() && validarAforoDisponible(reservasRealizadas);
+	public Boolean validarCantidad(int reservasRealizadas, int cantidadReservaAntigua) {
+		return validarCantidadMaxima() && validarAforoDisponible(reservasRealizadas, cantidadReservaAntigua);
 	}
 
 	private Boolean validarCantidadMaxima() {
 		return this.cantidad <= RESERVAS_MAXIMAS_POR_CLIENTE;
 	}
 
-	private Boolean validarAforoDisponible(int reservasRealizadas) {
-		int aforoDisponible = this.getEvento().getAforoMaximo() - reservasRealizadas;
+	private Boolean validarAforoDisponible(int reservasRealizadas, int cantidadReservaAntigua) {
+		int aforoDisponible = this.getEvento().getAforoMaximo() - reservasRealizadas + cantidadReservaAntigua;
 		return cantidad <= aforoDisponible;
 	}
 

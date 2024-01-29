@@ -22,11 +22,10 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" th:href="@{/activos}">Activos</a>
+						<a class="nav-link" th:href="@{/eventos/activos}">Activos</a>
 					</li>
-
 					<li class="nav-item">
-						<a class="nav-link" th:href="@{/destacados}">Destacados</a>
+						<a class="nav-link" th:href="@{/eventos/destacados}">Destacados</a>
 					</li>
 
 					<li class="nav-item">
@@ -35,21 +34,12 @@
 
 					<li sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')"
 						class="nav-item active">
-						<a class="nav-link" th:href="@{/app/tipos/todos}">Mis Reservas</a>
-					</li>
-
-
-					<li sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR')" class="nav-item">
-						<a class="nav-link" th:href="@{/app/usuarios/todos}">Usuarios</a>
-					</li>
-
-
-					<li sec:authorize="hasRole('ROLE_ADMINISTRADOR')" class="nav-item">
-						<a class="nav-link" th:href="@{/app/perfiles/todos}">Perfiles<a />
+						<a class="nav-link" th:href="@{/reservas/misReservas}">Mis Reservas</a>
 					</li>
 				</ul>
 			</div>
-			<spam sec:authentication="name"></spam>
+			<spam sec:authorize="!isAuthenticated()">Invitado</spam>
+			<spam sec:authorize="isAuthenticated()" sec:authentication="name"></spam>
 			<ul class="nav justify-content-end">
 				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/index}">Iniciar
 						Sesion</a></li>
@@ -73,18 +63,19 @@
 			<p th:text="'Aforo máximo del evento: ' +${evento.aforoMaximo}"></p>
 			<p th:text="'Mínimo asistencia del evento: ' +${evento.minimoAsistencia}"></p>
 			<p th:text="'Precio del evento: ' +${evento.precio}"></p>
-			<img src="/images/evento.jpg" alt="imagen evento demo" class="rounded float-right"style="max-width:20%;"/>
+			<img src="/images/evento.jpg" alt="imagen evento demo" class="rounded float-right" style="max-width:20%;" />
 
 		</div>
 		<div>
 			<p th:text="'Precio del evento: ' +${evento.precio}"></p>
 			<p>Reservas disponibles para el evento: <span th:text="${aforoDisponible}"></span></p>
-			<form th:action="@{/reservas/alta}" th:object="${reserva}" method="post" sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')">
+			<form th:action="@{/reservas/alta}" th:object="${reserva}" method="post"
+				sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')">
 				<label for="cantidad">cantidad a reservar</label>
 				<input type="number" name="cantidad" id="cantidad" min="1" max="10" th:value="${cantidadReservas}">
 				<button class="btn btn-success btn-m" type="submit">Realizar Reserva</button>
 			</form>
-			
+
 		</div>
 		<a sec:authorize="!isAuthenticated()" class="btn btn-success btn-sm" th:href="@{/index}">Iniciar Sesion</a></li>
 		<a sec:authorize="!isAuthenticated()" class="btn btn-success btn-sm" th:href="@{/signup}">Registrarse</a></li>
