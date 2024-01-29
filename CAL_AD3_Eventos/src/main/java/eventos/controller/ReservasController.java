@@ -29,10 +29,10 @@ public class ReservasController {
 		return "/";
 	}
 	
-	@PostMapping("/reservas/eliminar/{id}")
+	@GetMapping("/reservas/eliminar/{id}")
 	public String eliminarReserva(@PathVariable("id") int idReserva) {
 		reservaDaoImpl.cancelarReserva(reservaDaoImpl.buscarUnaReserva(idReserva));
-		return "/misReservas";
+		return "forward:/reservas/misReservas";
 	}
 
 }

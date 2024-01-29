@@ -63,7 +63,7 @@
 				<td>
 					<a th:href="@{/eventos/verUno/{id}(id=${reserva.evento.idEvento})}"
 						class="btn btn-warning btn-sm">Modificar</a>
-					<a th:href="@{/eventos/reservas/eliminar{id}(id=${reserva.idReserva})}"
+					<a th:href="@{/reservas/eliminar/{id}(id=${reserva.idReserva})}"
 						class="btn btn-danger btn-sm">Cancelar</a>
 				</td>
 
