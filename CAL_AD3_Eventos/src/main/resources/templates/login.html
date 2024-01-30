@@ -1,0 +1,58 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container">
+		<form name="formLogin" th:action="@{/login}" method="post">
+			<fieldset class="form-group mt-100">
+				<legend class="text-primary text-center">Por favor, introduzca usuario y contraseña.</legend>
+				<div th:if="${param.error}" class="alert alert-error">
+					Invalid username and password.
+				</div>
+				<div th:if="${param.logout}" class="alert alert-success">
+					You have been logged out.
+				</div>
+				<div class="form-group row">
+					<label class="col-form-label col-sm-2" for="username">Usuario</label>
+					<div class="col-sm-10">
+						<input class="form-control " type="text" id="username" name="username" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-form-label col-sm-2" for="password">Pontraseña</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="password" id="password" name="password" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<button type="submit" class="btn btn-success btn-sm w-100">Log in</button>
+				</div>
+				<div class="form-group row ">
+					<a sec:authorize="!isAuthenticated()" class="btn btn-primary btn-sm  w-100"
+						th:href="@{/signup}">Registrarse</a>
+					<a class="btn btn-secondary btn-sm w-100" th:href="@{/}">Volver Home</a>
+				</div>
+			</fieldset>
+
+
+		</form>
+
+
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

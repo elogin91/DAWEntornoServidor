@@ -51,7 +51,7 @@ public class DataUserConfiguration {
 				.anyRequest().authenticated())
 				// El formulario de Login no requiere autenticacion
 				// Hay que cambiarlo si ponemos un login custom
-				.formLogin(form -> form.permitAll().defaultSuccessUrl("/", true));
+				.formLogin(form -> form.permitAll().defaultSuccessUrl("/", true).loginPage("/login"));
 
 		return http.build();
 	}
