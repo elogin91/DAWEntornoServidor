@@ -19,4 +19,8 @@ public interface ReservaDao {
 	List<Reserva> buscarReservasPorClienteYEvento(String username, int idEvento);
 
 	List<Reserva> buscarReservasPorEvento(int idEvento);
+
+	List<Reserva> buscarReservasPorClientePendientes(String username);
+
+	List<Reserva> buscarReservasPorClienteCaducadas(String username);
 }

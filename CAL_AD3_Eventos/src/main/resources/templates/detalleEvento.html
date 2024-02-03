@@ -9,49 +9,7 @@
 </head>
 
 <body>
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-			<a class="navbar-brand" th:href="@{/}">AppEventos</a>
-
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-
-					<li sec:authorize="hasRole('ROLE_GESTOR')" class="nav-item active">
-						<a class="nav-link" th:href="@{/app/tipos/todos}">Crear evento</a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/eventos/activos}">Activos</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/eventos/destacados}">Destacados</a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/}">Tipos de eventos</a>
-					</li>
-
-					<li sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')"
-						class="nav-item active">
-						<a class="nav-link" th:href="@{/reservas/misReservas}">Mis Reservas</a>
-					</li>
-				</ul>
-			</div>
-			<spam sec:authorize="!isAuthenticated()">Invitado</spam>
-			<spam sec:authorize="isAuthenticated()" sec:authentication="name"></spam>
-			<ul class="nav justify-content-end">
-				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/index}">Iniciar
-						Sesion</a></li>
-				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link"
-						th:href="@{/signup}">Registrarse</a></li>
-
-				<li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/logout}">Cerrar
-						Sesion</a></li>
-			</ul>
-
-		</nav>
-	</header>
+	<header th:replace="~{fragments/header :: header}" />
 	<div class="container">
 		<h1 class="text-primary">Detalle del Evento</h1>
 		<div>
@@ -67,7 +25,6 @@
 
 		</div>
 		<div>
-			<p th:text="'Precio del evento: ' +${evento.precio}"></p>
 			<p>Reservas disponibles para el evento: <span th:text="${aforoDisponible}"></span></p>
 
 			<form
@@ -76,12 +33,15 @@
 				sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')">
 				<label for="cantidad">cantidad a reservar</label>
 				<input type="number" name="cantidad" id="cantidad" min="1" max="10" th:value="${cantidadReservas}">
-				<button class="btn btn-success btn-m" type="submit">Realizar Reserva</button>
+				<button class="btn btn-warning btn-sm" type="submit" th:if="${reserva != null}">Modificar Reservas</button>
+				<button class="btn btn-success btn-m" type="submit" th:if="${reserva == null && aforoDisponible > 0}">Realizar Reserva</button>		
+				<span class="text-danger" th:unless="${aforoDisponible>0}">Reserva no disponible por aforo  máximo.</span>
+				<span class="text-danger" th:unless="${cantidadReservas<10}">Reservas máximas alcanzadas.</span>
 			</form>
 
 		</div>
-		<a sec:authorize="!isAuthenticated()" class="btn btn-success btn-sm" th:href="@{/index}">Iniciar Sesion</a></li>
-		<a sec:authorize="!isAuthenticated()" class="btn btn-success btn-sm" th:href="@{/signup}">Registrarse</a></li>
+		<a sec:authorize="!isAuthenticated()" class="btn btn-success btn-sm" th:href="@{/login}">Iniciar Sesion</a></li>
+		<a sec:authorize="!isAuthenticated()" class="btn btn-success btn-sm" th:href="@{/register}">Registrarse</a></li>
 		<a class="btn btn-primary btn-sm" th:href="@{/}">Volver Home</a>
 
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

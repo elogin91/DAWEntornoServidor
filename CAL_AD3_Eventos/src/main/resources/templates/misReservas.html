@@ -9,53 +9,19 @@
 </head>
 
 <body>
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" th:href="@{/}">AppEventos</a>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					<li sec:authorize="hasRole('ROLE_GESTOR')" class="nav-item active">
-						<a class="nav-link" th:href="@{/app/tipos/todos}">Crear evento</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/eventos/activos}">Activos</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/eventos/destacados}">Destacados</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/}">Tipos de eventos</a>
-					</li>
-					<li sec:authorize="hasAnyRole('ROLE_GESTOR','ROLE_ADMINISTRADOR','ROLE_CLIENTE')"
-						class="nav-item active">
-						<a class="nav-link" th:href="@{/reservas/misReservas}">Mis Reservas</a>
-					</li>
-				</ul>
-			</div>
-			<spam sec:authorize="!isAuthenticated()">Invitado</spam>
-			<spam sec:authorize="isAuthenticated()" sec:authentication="name"></spam>
-			<ul class="nav justify-content-end">
-				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/index}">Iniciar
-						Sesion</a></li>
-				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link"
-						th:href="@{/signup}">Registrarse</a></li>
-				<li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/logout}">Cerrar
-						Sesion</a></li>
-			</ul>
-		</nav>
-	</header>
+	<header th:replace="~{fragments/header :: header}" />
 	<div class="container">
 		<h1 class="text-primary">Lista de mis reservas</h1>
 
 		<h3><span th:text="${mensaje}"></span></h3>
+		<h3>Reservas en curso:</span></h3>
 		<table class="table table-striped table-sm">
 			<th>Nombre Evento</th>
 			<th>Fecha Inicio</th>
 			<th>Precio Unidad</th>
 			<th>Cantidad</th>
 			<th>Opciones</th>
-
-			<tr th:each="reserva : ${misReservas}">
+			<tr th:each="reserva : ${misReservasPendientes}">
 				<td th:text="${reserva.evento.nombre}"></td>
 				<td th:text="${reserva.evento.fechaInicio}"></td>
 				<td th:text="${reserva.evento.precio}"></td>
@@ -66,6 +32,21 @@
 					<a th:href="@{/reservas/eliminar/{id}(id=${reserva.idReserva})}"
 						class="btn btn-danger btn-sm">Cancelar</a>
 				</td>
+
+			</tr>
+		</table>
+		
+		<h3>Reservas antigüas:</span></h3>
+		<table class="table table-striped table-sm">
+			<th>Nombre Evento</th>
+			<th>Fecha Inicio</th>
+			<th>Precio Unidad</th>
+			<th>Cantidad</th>
+			<tr th:each="reserva : ${misReservasCaducadas}">
+				<td th:text="${reserva.evento.nombre}"></td>
+				<td th:text="${reserva.evento.fechaInicio}"></td>
+				<td th:text="${reserva.evento.precio}"></td>
+				<td th:text="${reserva.cantidad}"></td>
 
 			</tr>
 		</table>

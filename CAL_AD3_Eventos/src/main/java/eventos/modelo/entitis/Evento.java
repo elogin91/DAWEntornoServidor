@@ -3,7 +3,7 @@ package eventos.modelo.entitis;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 
 /**

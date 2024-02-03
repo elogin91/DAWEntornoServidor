@@ -11,5 +11,6 @@ public interface EventoDao {
 	Evento buscarUnEvento (int idEvento);
 	List<Evento>buscarEventosActivos();
 	List<Evento>buscarEventosDestacados();
+	List<Evento>buscarEventosActivosyDestacados();
 	List<Evento>buscarEventosPorTipo(int idTipo);
 }

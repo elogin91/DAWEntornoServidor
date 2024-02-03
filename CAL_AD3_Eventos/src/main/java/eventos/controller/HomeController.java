@@ -1,30 +1,19 @@
 package eventos.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import eventos.modelo.dao.EventoDaoImpl;
-import eventos.modelo.dao.TipoDaoImpl;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class HomeController {
-	@Autowired
-	private EventoDaoImpl eventoDaoImpl;
-	@Autowired
-	private TipoDaoImpl tipoDaoImpl;
-	
+public class HomeController extends BaseController {
 	@GetMapping("/")
-	public String home(Model model) {
-		model.addAttribute("eventosDestacados", eventoDaoImpl.buscarEventosDestacados());
-		model.addAttribute("tipos", tipoDaoImpl.buscarTodosTipo());
+	public String home(Model model, HttpSession httpSession, Authentication authentication, @RequestParam(required = false) String tipo) {
+		setSessionAttributes(httpSession, authentication);
+		model.addAttribute("eventosDestacados", filterTypes(eventoDao.buscarEventosActivosyDestacados(), tipo));
 		return "home";
 	}
-	
-	@GetMapping("/login")
-	public String entrandoUsuario() {
-		return "login";
-	}
-
 }

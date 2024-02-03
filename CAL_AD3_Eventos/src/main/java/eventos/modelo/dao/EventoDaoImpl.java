@@ -64,4 +64,9 @@ public class EventoDaoImpl implements EventoDao {
 		return eventoRepository.findEventoPorTipo(idTipo);
 	}
 
+	@Override
+	public List<Evento> buscarEventosActivosyDestacados() {
+		return eventoRepository.findEventoPorEstadoYDestacado();
+	}
+
 }

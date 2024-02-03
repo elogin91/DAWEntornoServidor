@@ -1,26 +1,23 @@
 package eventos.configuration;
 
+
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @EnableWebSecurity
 @Configuration
 public class DataUserConfiguration {
-	
-    String[] staticResources  =  {
-            "/css/**",
-            "/images/**",
-            "/fonts/**",
-            "/scripts/**",
-        };
+
+	String[] staticResources = { "/css/**", "/images/**", "/fonts/**", "/scripts/**", };
+
 	@Bean
 	UserDetailsManager usersCustom(DataSource dataSource) {
 		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
@@ -32,26 +29,25 @@ public class DataUserConfiguration {
 		return users;
 	}
 
-
-	
 	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain filterChain(HttpSecurity http)
+			throws Exception {
 		http.csrf(csrf -> csrf.disable());
 		// Los recursos estáticos no requieren autenticación
 		http.authorizeHttpRequests(authorize -> authorize.requestMatchers(staticResources).permitAll()
 				// Las vistas públicas no requieren autenticación
-				.requestMatchers("/registro", "/", "/login", "/logout", "/eventos/verUno/**").permitAll()
+				.requestMatchers("/register", "/", "/login", "/logout", "/eventos/verUno/**").permitAll()
 				.requestMatchers("/eventos/activos", "/eventos/destacados").permitAll()
 				.requestMatchers("/rest/encriptar/**").permitAll()
 				// Todas las demás URLs de la Aplicación requieren autenticación
 				// Asignar permisos a URLs por ROLES
 				.requestMatchers("/eventos/**").hasAnyAuthority("ROLE_CLIENTE", "ROLE_GESTOR", "ROLE_ADMINISTRADOR")
 				.requestMatchers("/reservas/**").hasAnyAuthority("ROLE_CLIENTE", "ROLE_GESTOR", "ROLE_ADMINISTRADOR")
-
 				.anyRequest().authenticated())
 				// El formulario de Login no requiere autenticacion
 				// Hay que cambiarlo si ponemos un login custom
-				.formLogin(form -> form.permitAll().defaultSuccessUrl("/", true).loginPage("/login"));
+				.formLogin(form -> form.permitAll().defaultSuccessUrl("/", true).loginPage("/login"))
+				.logout(logout -> logout.logoutSuccessUrl("/").permitAll());
 
 		return http.build();
 	}

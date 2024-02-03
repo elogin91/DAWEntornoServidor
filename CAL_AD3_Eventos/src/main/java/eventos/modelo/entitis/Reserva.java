@@ -21,7 +21,6 @@ import jakarta.persistence.Table;
 @Table(name = "reservas")
 @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r")
 public class Reserva implements Serializable {
-	private static final int RESERVAS_MAXIMAS_POR_CLIENTE = 10;
 
 	private static final long serialVersionUID = 1L;
 
@@ -98,16 +97,4 @@ public class Reserva implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public Boolean validarCantidad(int reservasRealizadas) {
-		return validarCantidadMaxima() && validarAforoDisponible(reservasRealizadas);
-	}
-
-	private Boolean validarAforoDisponible(int reservasRealizadas) {
-		int aforoDisponible = this.getEvento().getAforoMaximo() - reservasRealizadas;
-		return cantidad <= aforoDisponible;
-	}
-
-	private Boolean validarCantidadMaxima() {
-		return this.cantidad <= RESERVAS_MAXIMAS_POR_CLIENTE;
-	}
 }

@@ -5,19 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import eventos.modelo.entitis.Evento;
 import eventos.modelo.entitis.Reserva;
 import eventos.modelo.repository.ReservaRepository;
 
 @Repository
 public class ReservaDaoImpl implements ReservaDao {
-
+	private static final int RESERVAS_MAXIMAS_POR_CLIENTE = 10;
 	@Autowired
 	private ReservaRepository reservaRepository;
 
 	@Override
 	public Reserva altaReserva(Reserva reserva) {
 
-		if (reserva.validarCantidad(reservaRepository.countByEvento(reserva.getEvento()))){
+		if (reserva.getCantidad() <= RESERVAS_MAXIMAS_POR_CLIENTE && tieneAforo(reserva.getEvento(), reserva.getCantidad())){
 			try {
 				return reservaRepository.save(reserva);
 			} catch (Exception e) {
@@ -29,21 +30,24 @@ public class ReservaDaoImpl implements ReservaDao {
 		
 	}
 
-	private int calcularReservasTotales (int reservasRealizadas, Reserva reservasAntiguasRealizadasPorCliente) {
-		int reservasTotales;
-		if (reservasAntiguasRealizadasPorCliente !=null) {
-			reservasTotales = reservasRealizadas+ (reservasAntiguasRealizadasPorCliente.getCantidad());
-		}
-		else {
-			reservasTotales = reservasRealizadas;
-		}
-		return reservasTotales;
+	private int calcularCantidadReservaEvento  (int idEvento) {
+		List<Reserva> reservasDelEvento= reservaRepository.findByIdEvento(idEvento);
+		int cantidadReservasEvento = reservasDelEvento.stream().mapToInt(it -> it.getCantidad()).sum();
+		return cantidadReservasEvento;
+	}
+	
+	
+	private boolean tieneAforo(Evento evento, int nuevasReservas) {
+		int cantidadDeReservasAntiguas = calcularCantidadReservaEvento(evento.getIdEvento());
+		int aforoMaximo = evento.getAforoMaximo();
+		int aforoDisponible = aforoMaximo - cantidadDeReservasAntiguas ;
+		
+		return cantidadDeReservasAntiguas <= aforoMaximo && nuevasReservas <= aforoDisponible;
 	}
 	
 	@Override
 	public Reserva modificarReserva(Reserva reservaAntigua, int cantidadNueva) {
-		
-		if (reservaAntigua.validarCantidad(calcularReservasTotales(reservaRepository.countByEvento(reservaAntigua.getEvento()), reservaAntigua ))) {
+		if(cantidadNueva <= RESERVAS_MAXIMAS_POR_CLIENTE && tieneAforo(reservaAntigua.getEvento(), cantidadNueva - reservaAntigua.getCantidad()) ) {
 			try {
 				reservaAntigua.setCantidad(cantidadNueva);
 				return reservaRepository.save(reservaAntigua);
@@ -52,6 +56,7 @@ public class ReservaDaoImpl implements ReservaDao {
 				return null;
 			}
 		}
+
 		return null;
 	}
 
@@ -83,6 +88,18 @@ public class ReservaDaoImpl implements ReservaDao {
 	@Override
 	public List<Reserva> buscarReservasPorEvento(int idEvento) {
 		return reservaRepository.findByIdEvento(idEvento);
+	}
+
+	@Override
+	public List<Reserva> buscarReservasPorClientePendientes(String username) {
+		
+		return reservaRepository.findReservasPorClientePendientes(username);
+	}
+
+	@Override
+	public List<Reserva> buscarReservasPorClienteCaducadas(String username) {
+		// TODO Auto-generated method stub
+		return reservaRepository.findReservasPorClienteCaducados(username);
 	}
 
 }

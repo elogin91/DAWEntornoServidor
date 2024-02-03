@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import eventos.modelo.entitis.Reserva;
-import eventos.modelo.entitis.Evento;
 
 @Repository
 public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
@@ -17,8 +16,14 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
 	@Query("select r from Reserva r where r.usuario.username=?1 AND r.evento.idEvento=?2")
 	public List<Reserva> findReservasPorClienteYEvento(String username, int idEvento);
 
-	public int countByEvento(Evento evento);
 
 	@Query("select r from Reserva r where r.evento.idEvento=?1")
 	public List<Reserva> findByIdEvento(int idEvento);
+	
+	@Query("select r from Reserva r where r.usuario.username=?1 AND r.evento.fechaInicio>current_date")
+	public List<Reserva> findReservasPorClientePendientes(String username);
+	
+	@Query("select r from Reserva r where r.usuario.username=?1 AND r.evento.fechaInicio<current_date")
+	public List<Reserva> findReservasPorClienteCaducados(String username);
+	
 }

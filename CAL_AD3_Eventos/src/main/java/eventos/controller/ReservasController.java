@@ -1,6 +1,5 @@
 package eventos.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,27 +8,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import eventos.modelo.dao.EventoDao;
-import eventos.modelo.dao.ReservaDaoImpl;
-import eventos.modelo.dao.UsuarioDao;
 import eventos.modelo.entitis.Reserva;
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
-public class ReservasController {
+public class ReservasController extends BaseController {
 
-	@Autowired
-	private ReservaDaoImpl reservaDaoImpl;
-	
-	@Autowired
-	private EventoDao eventoDao;
-	
-	@Autowired
-	private UsuarioDao usuarioDao;
-	
 	@GetMapping("/reservas/misReservas")
-	public String verMisReservas(Model model,Authentication authentication) {
-		model.addAttribute("misReservas", reservaDaoImpl.buscarReservasPorCliente(authentication.getName()));
+	public String verMisReservas(Model model,HttpSession httpSession, Authentication authentication) {
+		setSessionAttributes(httpSession, authentication);
+		model.addAttribute("misReservasPendientes", reservaDao.buscarReservasPorClientePendientes(authentication.getName()));
+		model.addAttribute("misReservasCaducadas", reservaDao.buscarReservasPorClienteCaducadas(authentication.getName()));
 		return "/misReservas";
 	}
 	
@@ -38,8 +28,8 @@ public class ReservasController {
 		reserva.setEvento(eventoDao.buscarUnEvento(idEvento));
 		reserva.setUsuario(usuarioDao.buscarUnUsuario(authentication.getName()));
 		
-		if (reservaDaoImpl.altaReserva(reserva) != null) {
-			ratt.addFlashAttribute("mensaje", "Evento dado de alta");
+		if (reservaDao.altaReserva(reserva) != null) {
+			ratt.addFlashAttribute("mensaje", "Reserva dada de alta");
 		} else {
 			ratt.addFlashAttribute("mensaje", "Algo ha fallado, alta no realizada");
 		}
@@ -48,16 +38,17 @@ public class ReservasController {
 	}
 	
 	@GetMapping("/reservas/eliminar/{id}")
-	public String eliminarReserva(@PathVariable("id") int idReserva) {
-		reservaDaoImpl.cancelarReserva(reservaDaoImpl.buscarUnaReserva(idReserva));
+	public String eliminarReserva(@PathVariable("id") int idReserva,HttpSession httpSession, Authentication authentication) {
+		setSessionAttributes(httpSession, authentication);
+		reservaDao.cancelarReserva(reservaDao.buscarUnaReserva(idReserva));
 		return "forward:/reservas/misReservas";
 	}
 	
 	@PostMapping("/reservas/evento{idEvento}/modificar/{id}")
 	public String modificarReserva(@PathVariable("id") int idReserva, Reserva reservaNueva,@PathVariable("idEvento") int idEvento, RedirectAttributes ratt) {
-		Reserva reservaAntigua = reservaDaoImpl.buscarUnaReserva(idReserva);
+		Reserva reservaAntigua = reservaDao.buscarUnaReserva(idReserva);
 		
-		if (reservaDaoImpl.modificarReserva(reservaAntigua, reservaNueva.getCantidad()) != null) {
+		if (reservaDao.modificarReserva(reservaAntigua, reservaNueva.getCantidad()) != null) {
 			ratt.addFlashAttribute("mensaje", "Evento dado de alta");
 		} else {
 			ratt.addFlashAttribute("mensaje", "Algo ha fallado, alta no realizada");
