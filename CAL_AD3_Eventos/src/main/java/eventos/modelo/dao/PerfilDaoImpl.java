@@ -34,8 +34,8 @@ public class PerfilDaoImpl implements PerfilDao {
 	}
 
 	@Override
-	public Perfil buscarUnoPerfil(Perfil perfil) {
-		return perfilRepository.findById(perfil.getIdPerfil()).orElse(null);
+	public Perfil buscarUnoPerfil(int idPerfil) {
+		return perfilRepository.findById(idPerfil).orElse(null);
 	}
 
 	@Override
