@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import unir.exa.ventas.modelo.dao.ComercialDao;
 import unir.exa.ventas.modelo.dao.PedidoDao;
 import unir.exa.ventas.modelo.entity.Comercial;
 import unir.exa.ventas.modelo.entity.Pedido;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
+@RestController
 @RequestMapping("/comercial")
 public class ComercialRestController {
 

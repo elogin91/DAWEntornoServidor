@@ -47,7 +47,7 @@ public class ComercialDaoImpl implements ComercialDao{
 
 	@Override
 	public List<Comercial> buscarComercialPorCliente(int idComercial) {
-		return comrepo.buscarComercialByCliente();
+		return comrepo.buscarComercialByCliente(idComercial);
 	}
 
 	@Override
