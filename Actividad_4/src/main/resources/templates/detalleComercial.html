@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Aplicación Director Comercial</title>
+</head>
+
+<body>
+	<h2>Pedido por comercial</h2>
+	<h3><span th:text="${mensaje}"></span></h3>
+
+	<table>
+		<tr>
+			<th>Id Pedido</th>
+			<th>Fecha</th>
+			<th>Total</th>
+			<th>Id Cliente</th>
+			<th>Id Comercial</th>
+
+		</tr>
+		<tr th:each="pedido : ${pedidos}">
+			<td th:text="${pedido.idPedido}"></td>
+			<td th:text="${pedido.fecha}"></td>
+			<td th:text="${pedido.total}"></td>
+			<td th:text="${pedido.cliente.idCliente}"></td>
+			<td th:text="${pedido.comercial.idComercial}"></td>
+
+		</tr>
+	</table>
+
+	<a th:href="@{/}">Home</a>
+
+</body>
+
+</html>

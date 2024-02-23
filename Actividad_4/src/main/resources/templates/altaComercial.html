@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Alta Comercial</title>
+	
+</head>
+
+<body>
+	<h3>Mensaje: <span th:text="${mensaje}"></span></h3>
+
+	<h3>Formulario de alta de nuevo comercial</h3>
+
+	<form th:action="@{/altaComercial}" th:object="${comercial}" method="post">
+		<div>
+			<label for="nombre" th:text="Nombre"></label>
+			<input type="text" name="nombre" th:field="*{nombre}" required/>
+		</div>
+		<div>
+			<label for="apellido1" th:text="apellido1"></label>
+			<input type="text" name="apellido1" th:field="*{apellido1}" required/>
+		</div>
+		<div>
+			<label for="apellido2" th:text="apellido2"></label>
+			<input type="text" name="apellido2" th:field="*{apellido2}" required/>
+		</div>
+		<div>
+			<label for="comision" th:text="comision"></label>
+			<input type="text" name="comision" th:field="*{comision}" required/>
+		</div>
+
+		<input type="submit" value="Enviar" />
+	</form>
+
+	<a  th:href="@{/}">Volver Home</a>
+</body>
+
+</html>

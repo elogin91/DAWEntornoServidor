@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import unir.exa.ventas.modelo.dao.ComercialDao;
-import unir.exa.ventas.modelo.dao.PedidoDao;
 import unir.exa.ventas.modelo.entity.Comercial;
 import unir.exa.ventas.modelo.entity.Pedido;
+import unir.exa.ventas.modelo.service.ComercialDao;
+import unir.exa.ventas.modelo.service.PedidoDao;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -30,7 +30,7 @@ public class ComercialRestController {
 	PedidoDao pedidoDao;
 
 	@PostMapping("/alta")
-	public ResponseEntity<?> altaComercial(@RequestBody Comercial comercial) {
+	public ResponseEntity<?> creandoComercial(@RequestBody Comercial comercial) {
 		if (comercialDao.altaComercial(comercial) != null) {
 			return ResponseEntity.status(HttpStatus.CREATED).body(comercial);
 		} else {
@@ -39,7 +39,7 @@ public class ComercialRestController {
 	}
 
 	@DeleteMapping("eliminar/{id}")
-	ResponseEntity<?> eliminarComercial(@PathVariable int id) {
+	ResponseEntity<?> eliminandoComercial(@PathVariable int id) {
 		if (comercialDao.eliminarComercial(id)) {
 			return ResponseEntity.status(HttpStatus.OK).body("Comercial eliminado");
 		} else {
@@ -48,7 +48,7 @@ public class ComercialRestController {
 	}
 
 	@GetMapping("/uno/{id}")
-	ResponseEntity<?> buscarUnComercial(@PathVariable int id) {
+	ResponseEntity<?> buscandoUnComercial(@PathVariable int id) {
 		Comercial comercial = comercialDao.buscarUnComercial(id);
 		if (comercial != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(comercial);
@@ -58,7 +58,7 @@ public class ComercialRestController {
 	}
 
 	@GetMapping("/bycliente/{id}")
-	ResponseEntity<?> ComercialPorCliente(@PathVariable int id) {
+	ResponseEntity<?> buscandoComercialPorCliente(@PathVariable int id) {
 		List<Comercial> comerciales = comercialDao.buscarComercialPorCliente(id);
 		if (!comerciales.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK).body(comerciales);
@@ -68,7 +68,7 @@ public class ComercialRestController {
 	}
 
 	@GetMapping("/conpedidos")
-	ResponseEntity<?> buscarComercialConPedidos() {
+	ResponseEntity<?> buscandoComercialConPedidos() {
 		List<Comercial> comerciales = comercialDao.buscarComercialesConPedidos();
 		if (!comerciales.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK).body(comerciales);
@@ -78,13 +78,12 @@ public class ComercialRestController {
 	}
 
 	@GetMapping("/pedidos/{id}")
-	ResponseEntity<?> buscarPedidosPorComercial(@PathVariable int id) {
+	ResponseEntity<?> buscandoPedidosPorComercial(@PathVariable int id) {
 		List<Pedido> pedidos = pedidoDao.pedidosByComercial(id);
 		if (!pedidos.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK).body(pedidos);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedidos no encontrados");
 		}
-	}
-;
+	};
 }

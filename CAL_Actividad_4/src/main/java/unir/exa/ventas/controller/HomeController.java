@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import unir.exa.ventas.modelo.dao.ClienteDaoImpl;
-import unir.exa.ventas.modelo.dao.ComercialDaoImpl;
-import unir.exa.ventas.modelo.dao.PedidoDaoImpl;
 import unir.exa.ventas.modelo.entity.Comercial;
+import unir.exa.ventas.modelo.service.ClienteDaoImpl;
+import unir.exa.ventas.modelo.service.ComercialDaoImpl;
+import unir.exa.ventas.modelo.service.PedidoDaoImpl;
 
 @Controller
 public class HomeController {
@@ -61,11 +61,11 @@ public class HomeController {
 
 	@PostMapping("/altaComercial")
 	public String procesandoAltaComercial(RedirectAttributes ratt, Comercial comercial) {
-		if ( comdao.altaComercial(comercial) == null) {
+		if (comdao.altaComercial(comercial) == null) {
 			ratt.addFlashAttribute("mensaje", "Algo ha fallado, alta no realizada");
 		} else {
 			ratt.addFlashAttribute("mensaje", "Comercial dado de alta");
-		}	
+		}
 		return "redirect:/";
 	}
 }

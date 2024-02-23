@@ -16,19 +16,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="pedidos")
+@Table(name = "pedidos")
 public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_pedido")
+	@Column(name = "id_pedido")
 	private int idPedido;
 	private Date fecha;
 	private double total;
 	@ManyToOne
-	@JoinColumn(name="id_cliente")
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	@ManyToOne
-	@JoinColumn(name="id_comercial")
+	@JoinColumn(name = "id_comercial")
 	private Comercial comercial;
-
 }
