@@ -16,4 +16,8 @@ public class VacanteService {
 	public List<Vacante> mostrarTodasVacantes() {
 		return vacanteRepository.findAll();
 	}
+	
+	public Vacante buscarUnaVacante(int id) {
+		return vacanteRepository.findById(id).orElse(null);
+	}
 }

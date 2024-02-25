@@ -3,7 +3,7 @@ package vacantes.modelo.dto;
 import java.util.List;
 
 public class JwtResponse {
-  private String token;
+  private String accessToken;
   private String type = "Bearer";
   private String nombre;
   private String username;
@@ -11,7 +11,7 @@ public class JwtResponse {
   private List<String> perfil;
 
   public JwtResponse(String accessToken, String nombre, String username, String email, List<String> roles) {
-    this.token = accessToken;
+    this.accessToken = accessToken;
     this.nombre = nombre;
     this.username = username;
     this.email = email;
@@ -19,11 +19,11 @@ public class JwtResponse {
   }
 
   public String getAccessToken() {
-    return token;
+    return accessToken;
   }
 
   public void setAccessToken(String accessToken) {
-    this.token = accessToken;
+    this.accessToken = accessToken;
   }
 
   public String getTokenType() {
