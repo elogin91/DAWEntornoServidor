@@ -35,14 +35,12 @@ public class SolicitudService {
 	}
 
 	public Solicitud handlerSolicitudRequest(SolicitudRequest solicitudRequest, Authentication auth) {
-		System.out.println(solicitudRequest);
 		Solicitud solicitudMap = new Solicitud();
 		solicitudMap.setArchivo(solicitudRequest.getArchivo());
 		solicitudMap.setComentarios(solicitudRequest.getComentario());
 		solicitudMap.setFecha(solicitudRequest.getFecha());
 		solicitudMap.setUsuario(usuarioRepository.findByUsername(auth.getName()).get());
 		solicitudMap.setVacante(solicitudRequest.getVacante());
-		System.out.println(solicitudMap);
 		return solicitudMap;
 	}
 }

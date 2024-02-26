@@ -18,10 +18,8 @@ import vacantes.modelo.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableMethodSecurity
-// (securedEnabled = true,
-// jsr250Enabled = true,
-// prePostEnabled = true) // by default
-public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
+
+public class WebSecurityConfig { 
   @Autowired
   UserDetailsServiceImpl userDetailsService;
 
@@ -59,7 +57,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> 
-          auth.requestMatchers("vacantes/**").permitAll()
+          auth.requestMatchers("public/**").permitAll()
               .requestMatchers("api/auth/**").permitAll()
               .anyRequest().authenticated()
         );
