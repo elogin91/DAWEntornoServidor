@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,16 @@ public class SolicitudRestController {
 	@GetMapping("/verTodas")
 	public ResponseEntity<?> buscandoSolicitudesPorUsuario(Authentication auth) {
 		List<Solicitud> solicitudes = solicitudService.buscarTodasSolicitudesPorUsuario(usuarioRepository.findByUsername(auth.getName()).get());
+		if (!solicitudes.isEmpty()) {
+			return ResponseEntity.ok(solicitudes);
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Solicitudes no encontrada");
+		}
+	}
+	
+	@GetMapping("/porVacante/{id}")
+	public ResponseEntity<?> buscandoSolicitudesPorVacante (@PathVariable int id, Authentication auth) {
+		List<Solicitud> solicitudes = solicitudService.buscarTodasSolicitudesPorVacante(id);
 		if (!solicitudes.isEmpty()) {
 			return ResponseEntity.ok(solicitudes);
 		} else {

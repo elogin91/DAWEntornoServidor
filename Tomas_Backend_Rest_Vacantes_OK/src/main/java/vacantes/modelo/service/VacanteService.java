@@ -1,10 +1,7 @@
 package vacantes.modelo.service;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import vacantes.modelo.dto.VacanteDto;
 import vacantes.modelo.entidades.EstatusVacante;
 import vacantes.modelo.entidades.Vacante;
@@ -25,11 +22,23 @@ public class VacanteService {
 		return vacanteRepository.findById(id).orElse(null);
 	}
 	
-	public Vacante altaVacante(Vacante vacante) {
+	public Vacante altaVacante(VacanteDto vacanteRequest) {
+		Vacante vacante=handlerVacanteRequest(vacanteRequest);
+		return vacanteRepository.save(vacante);
+	}
+	public Vacante cancelarVacante(int idVacante) {
+		Vacante vacante = buscarUnaVacante(idVacante);
+		vacante.setEstatus(EstatusVacante.CANCELADA);
 		return vacanteRepository.save(vacante);
 	}
 	
-	public Vacante handlerVacanteRequest(VacanteDto vacanteRequest) {
+	public Vacante adjudicarVacante(int idVacante) {
+		Vacante vacante = buscarUnaVacante(idVacante);
+		vacante.setEstatus(EstatusVacante.CUBIERTA);
+		return vacanteRepository.save(vacante);
+	}
+	
+	private Vacante handlerVacanteRequest(VacanteDto vacanteRequest) {
 		Vacante vacanteMap = new Vacante();
 		vacanteMap.setNombre(vacanteRequest.getNombre());
 		vacanteMap.setDescripcion(vacanteRequest.getDescripcion());
@@ -41,5 +50,18 @@ public class VacanteService {
 		vacanteMap.setSalario(vacanteRequest.getSalario());
 		vacanteMap.setCategoria(categoriaService.encontrarCategoria(vacanteRequest.getIdCategoria()));
 		return vacanteMap;
+	}
+
+	public Vacante modificarVacante(VacanteDto vacanteDto) {
+		Vacante vacante = buscarUnaVacante(vacanteDto.getIdVacante());
+		vacante.setNombre(vacanteDto.getNombre());
+		vacante.setDescripcion(vacanteDto.getDescripcion());
+		vacante.setDestacado(vacanteDto.getDestacado());
+		vacante.setDetalles(vacanteDto.getDetalles());
+		vacante.setImagen(vacanteDto.getImagen());
+		vacante.setSalario(vacanteDto.getSalario());
+		vacante.setCategoria(categoriaService.encontrarCategoria(vacanteDto.getIdCategoria()));
+		
+		return vacanteRepository.save(vacante);
 	}
 }

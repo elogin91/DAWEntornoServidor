@@ -56,8 +56,11 @@ public class WebSecurityConfig {
     http.csrf(csrf -> csrf.disable())
         .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        
         .authorizeHttpRequests(auth -> 
-          auth.requestMatchers("public/**").permitAll()
+          auth
+          //.requestMatchers("/categorias/**").hasAnyAuthority("Empresa")
+          	  .requestMatchers("public/**", "/categorias/**", "vacantes/**").permitAll()
               .requestMatchers("api/auth/**").permitAll()
               .anyRequest().authenticated()
         );
