@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.service.annotation.PutExchange;
 
 import vacantes.modelo.dto.SolicitudRequest;
 import vacantes.modelo.entidades.Solicitud;
@@ -56,5 +57,15 @@ public class SolicitudRestController {
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Solicitudes no encontrada");
 		}
+	}
+	@PutExchange("/adjudicar")
+	public ResponseEntity<?> adjudicandoSolicitud (@RequestBody SolicitudRequest solicitudRequest, Authentication auth) {
+		Solicitud solicitud =solicitudService.handlerSolicitudRequest(solicitudRequest, auth);
+		if (solicitudService.modificarSolicitud(solicitud) != null) {
+			return ResponseEntity.ok(solicitud);
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Solicitudes no adjudicada");
+		}
+		
 	}
 }

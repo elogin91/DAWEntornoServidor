@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>comercial</groupId>
-	<artifactId>CAL_Actividad_4</artifactId>
+	<artifactId>Actividad_4_API_rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CAL_Actividad_4</name>
 	<description>project for Spring Boot data jpa ventasbbdd</description>

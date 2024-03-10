@@ -51,4 +51,8 @@ public class SolicitudService {
 		Vacante vacante = vacanteService.buscarUnaVacante(idVacante);
 		return solicitudRepository.findByVacante(vacante);
 	}
+	
+	public Solicitud modificarSolicitud(Solicitud solicitud) {
+		return solicitudRepository.save(solicitud);
+	}
 }

@@ -7,11 +7,14 @@ import org.springframework.stereotype.Repository;
 
 import unir.exa.ventas.modelo.entity.Comercial;
 import unir.exa.ventas.repository.ComercialRepository;
+import unir.exa.ventas.repository.PedidoRepository;
 
 @Repository
 public class ComercialDaoImpl implements ComercialDao {
 	@Autowired
 	ComercialRepository comercialRepository;
+	@Autowired
+	PedidoRepository pedidoRepository;
 
 	@Override
 	public Comercial altaComercial(Comercial comercial) {
@@ -28,7 +31,7 @@ public class ComercialDaoImpl implements ComercialDao {
 	@Override
 	public boolean eliminarComercial(int idComercial) {
 		try {
-			if (comercialRepository.findById(idComercial).isPresent()) {
+			if (comercialRepository.findById(idComercial).isPresent()&& pedidoRepository.pedidosByIdComercial(idComercial).isEmpty()) {
 				comercialRepository.deleteById(idComercial);
 				return true;
 			}
