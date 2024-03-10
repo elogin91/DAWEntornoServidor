@@ -1,6 +1,7 @@
 package vacantes.modelo.dto;
 import jakarta.persistence.*;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import vacantes.modelo.entidades.EstatusVacante;
 import vacantes.modelo.entidades.Vacante;
 import java.util.Date;
@@ -11,7 +12,8 @@ import java.util.List;
  * The persistent class for the vacantes database table.
  * 
  */
-@Value
+@Data
+@AllArgsConstructor
 public class VacanteDto{
 	private int idVacante;
 	private String descripcion;
@@ -24,10 +26,7 @@ public class VacanteDto{
 	private String nombre;
 	private double salario;
 	private int idCategoria;
-	
-	public Vacante toEntity() {
-		return new Vacante(); // TODO
-	}
+	private Boolean existeSolicitud;
 	
 	public static List<VacanteDto> from(List<Vacante> vacantesEntities) {
 		return vacantesEntities.stream().map(VacanteDto::from).toList();
@@ -44,7 +43,8 @@ public class VacanteDto{
 				vacanteEntity.getImagen(), 
 				vacanteEntity.getNombre(),
 				vacanteEntity.getSalario(), 
-				vacanteEntity.getCategoria().getIdCategoria());
+				vacanteEntity.getCategoria().getIdCategoria(), 
+				null);
 	}
 	
 	

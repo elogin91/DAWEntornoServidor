@@ -5,21 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import jakarta.validation.Valid;
-import vacantes.configuraciones.JwtUtils;
-import vacantes.modelo.dto.JwtResponse;
-import vacantes.modelo.dto.LoginRequest;
-import vacantes.modelo.dto.MessageResponse;
-import vacantes.modelo.dto.SignupRequest;
-import vacantes.modelo.dto.UsuarioDto;
-import vacantes.modelo.entidades.Perfil;
-import vacantes.modelo.entidades.Usuario;
-import vacantes.modelo.repository.PerfilRepository;
-import vacantes.modelo.repository.UsuarioRepository;
-import vacantes.modelo.service.UserDetailsImpl;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,12 +13,22 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
+import vacantes.configuraciones.JwtUtils;
+import vacantes.modelo.dto.JwtResponse;
+import vacantes.modelo.dto.LoginRequest;
+import vacantes.modelo.dto.MessageResponse;
+import vacantes.modelo.dto.SignupRequest;
+import vacantes.modelo.entidades.Perfil;
+import vacantes.modelo.entidades.Usuario;
+import vacantes.modelo.repository.PerfilRepository;
+import vacantes.modelo.repository.UsuarioRepository;
+import vacantes.modelo.service.UserDetailsImpl;
 
 @RestController
 @CrossOrigin(origins = "*")

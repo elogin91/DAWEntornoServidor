@@ -19,56 +19,66 @@ import vacantes.modelo.service.UserDetailsServiceImpl;
 @Configuration
 @EnableMethodSecurity
 
-public class WebSecurityConfig { 
-  @Autowired
-  UserDetailsServiceImpl userDetailsService;
+public class WebSecurityConfig {
+	@Autowired
+	UserDetailsServiceImpl userDetailsService;
 
-  @Autowired
-  private AuthEntryPointJwt unauthorizedHandler;
+	@Autowired
+	private AuthEntryPointJwt unauthorizedHandler;
 
-  @Bean
-  public AuthTokenFilter authenticationJwtTokenFilter() {
-    return new AuthTokenFilter();
-  }
+	@Bean
+	public AuthTokenFilter authenticationJwtTokenFilter() {
+		return new AuthTokenFilter();
+	}
 
-  @Bean
-  public DaoAuthenticationProvider authenticationProvider() {
-      DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-       
-      authProvider.setUserDetailsService(userDetailsService);
-      authProvider.setPasswordEncoder(passwordEncoder());
-   
-      return authProvider;
-  }
-  
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-    return authConfig.getAuthenticationManager();
-  }
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
-  
-  @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.csrf(csrf -> csrf.disable())
-        .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        
-        .authorizeHttpRequests(auth -> 
-          auth
-          //.requestMatchers("/categorias/**").hasAnyAuthority("Empresa")
-          	  .requestMatchers("public/**", "/categorias/**", "vacantes/**").permitAll()
-              .requestMatchers("api/auth/**").permitAll()
-              .anyRequest().authenticated()
-        );
-    
-    http.authenticationProvider(authenticationProvider());
+		authProvider.setUserDetailsService(userDetailsService);
+		authProvider.setPasswordEncoder(passwordEncoder());
 
-    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-    
-    return http.build();
-  }
+		return authProvider;
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf(csrf -> csrf.disable())
+				.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/vacantes/").permitAll()
+						.requestMatchers("/vacantes/buscar/**").permitAll()
+						.requestMatchers("/vacantes/altaVacante").hasAnyAuthority("Empresa")
+						.requestMatchers("/vacantes/verDetalle/**").permitAll()
+						.requestMatchers("/vacantes/cancelar/**").hasAnyAuthority("Empresa")
+						.requestMatchers("/vacantes/adjudicar/**").hasAnyAuthority("Empresa")
+						.requestMatchers("/vacantes/modificandoVacante").hasAnyAuthority("Empresa")
+						.requestMatchers("/solicitudes/alta").hasAnyAuthority("Usuario")
+						.requestMatchers("/solicitudes/verTodas").hasAnyAuthority("Usuario")
+						.requestMatchers("/solicitudes/porVacante/**").hasAnyAuthority("Empresa")
+						.requestMatchers("/solicitudes/adjudicar/**").hasAnyAuthority("Empresa")
+						.requestMatchers("/solicitudes/cancelar/**").hasAnyAuthority("Empresa", "Usuario")
+						.requestMatchers("/profile", "/profile/modificar").hasAnyAuthority("Empresa", "Usuario")
+						.requestMatchers("/categorias/**").permitAll()
+						.requestMatchers("/api/auth/**").permitAll()
+						.anyRequest().authenticated());
+
+		http.authenticationProvider(authenticationProvider());
+
+		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+		return http.build();
+	}
 }

@@ -1,6 +1,7 @@
 package vacantes.modelo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 
@@ -15,4 +16,7 @@ import java.util.List;
 public interface SolicitudRepository extends JpaRepository<Solicitud, Integer> {
 	List<Solicitud> findByUsuario(Usuario usuario);
 	List<Solicitud> findByVacante(Vacante vacante);
+	
+	@Query("Select s FROM Solicitud s where s.usuario.username=?1 and s.vacante.idVacante=?2")
+	Solicitud findByUsuarioAndVacante(String username, int idVacante);
 }

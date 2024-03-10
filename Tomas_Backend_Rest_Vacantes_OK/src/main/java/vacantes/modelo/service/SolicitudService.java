@@ -12,7 +12,7 @@ import vacantes.modelo.entidades.Usuario;
 import vacantes.modelo.entidades.Vacante;
 import vacantes.modelo.repository.SolicitudRepository;
 import vacantes.modelo.repository.UsuarioRepository;
-import vacantes.modelo.repository.VacanteRepository;
+
 
 @Service
 public class SolicitudService {
@@ -52,7 +52,25 @@ public class SolicitudService {
 		return solicitudRepository.findByVacante(vacante);
 	}
 	
+	public Solicitud bucarUnaSolicitud (int idSolicitud) {
+		Solicitud solicitud = solicitudRepository.findById(idSolicitud).orElse(null);
+		return solicitud;
+	}
+	public Solicitud bucarUnaSolicitudUsuarioYVacante (String username, int idVacante) {
+		Solicitud solicitud = solicitudRepository.findByUsuarioAndVacante(username, idVacante);
+		return solicitud;
+	}
+	
 	public Solicitud modificarSolicitud(Solicitud solicitud) {
+		return solicitudRepository.save(solicitud);
+	}
+	
+	public Solicitud adjudicarSolicitud (Solicitud solicitud) {
+		solicitud.setEstado(1);
+		return solicitudRepository.save(solicitud);
+	}
+	public Solicitud cancelarSolicitud (Solicitud solicitud) {
+		solicitud.setEstado(2);
 		return solicitudRepository.save(solicitud);
 	}
 }

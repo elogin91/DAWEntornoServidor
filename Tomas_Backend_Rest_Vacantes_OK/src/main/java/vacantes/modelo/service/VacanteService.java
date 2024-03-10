@@ -22,6 +22,14 @@ public class VacanteService {
 		return vacanteRepository.findById(id).orElse(null);
 	}
 	
+	public List<Vacante>buscarPorVacantesActivas(){
+		return vacanteRepository.buscarVacantesActivas();
+	}
+	
+	public List<Vacante>buscarPorVacantesActivasPorCategoria(int categoria){
+		return vacanteRepository.buscarVacantesCategoria(categoria);
+	}
+	
 	public Vacante altaVacante(VacanteDto vacanteRequest) {
 		Vacante vacante=handlerVacanteRequest(vacanteRequest);
 		return vacanteRepository.save(vacante);
